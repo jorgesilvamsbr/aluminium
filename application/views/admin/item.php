@@ -1,3 +1,4 @@
+<script type="text/javascript" src="<?php echo base_url(); ?>admin/js/admin/item.js" ></script>
 <div id="page-wrapper">
     <div class="row">
         <div class="col-lg-12">
@@ -14,112 +15,48 @@
                 </div>
                 <div class="panel-body">
                     <div class="row">
-                        <div class="col-lg-4 form-group-lg">
-                            <?php
-                            $attributes = array('id' => 'formCadastro');
-                            echo form_open("admin/cadastrarItem",$attributes);
-                            ?>
-                            
-                                <input class="form-control" id="idCategoria" value="-1" type="hidden">
-                                
+                        <div class="form-group">
+                            <div class="col-lg-5 form-group">
+                                <?php
+                                $attributes = array('id' => 'formItem');
+                                echo form_open("item/cadastrarItem", $attributes);
+                                ?>
+
+                                <input class="form-control" id="idItem" value="-1" type="hidden">
+
                                 <label>Nome Produto</label>
-                                 <select class="form-control" name="statusCategoria">
+                                <select class="form-control" name="idProduto" id="idProduto">
                                     <?php
                                     foreach ($produto->result() as $produto) {
                                         echo "<option value='" . $produto->id . "'>" . $produto->nome . "</option>";
                                     }
                                     ?>
-                                 </select>
+                                </select>
                                 <br/>
-                                
+
                                 <label>Nome Categoria</label>
-                                <input class="form-control" id="nomeCategoria" name="nomeCategoria">
+                                <input class="form-control" id="nomeItem" name="nomeItem">
                                 <p class="help-block">Examplo: Sala, Cozinha, etc.</p>
 
                                 <label>Descrição do Item</label>
-                                <textarea class="form-control" cols="50" rows="5"></textarea>
+                                <textarea class="form-control" cols="50" rows="5" name="descricaoItem" id="descricaoItem"></textarea>
                                 <p class="help-block">Exemplo: Este produto contem 4 gavetas..., etc.</p>
-                                
+
                                 <label>Status</label>
-                                <select class="form-control" name="statusCategoria">
+                                <select class="form-control" name="statusItem" id="statusItem">
                                     <option value="1">Ativo</option>
                                     <option value="0">Inativo</option>
                                 </select>
-                            <br/>
-                            
-                            <!--                                <div class="form-group">
-                                                                <label>Text Input with Placeholder</label>
-                                                                <input class="form-control" placeholder="Enter text">
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label>Static Control</label>
-                                                                <p class="form-control-static">email@example.com</p>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label>File input</label>
-                                                                <input type="file">
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label>Text area</label>
-                                                                <textarea class="form-control" rows="3"></textarea>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label>Checkboxes</label>
-                                                                <div class="checkbox">
-                                                                    <label>
-                                                                        <input type="checkbox" value="">Checkbox 1
-                                                                    </label>
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label>Inline Checkboxes</label>
-                                                                <label class="checkbox-inline">
-                                                                    <input type="checkbox">1
-                                                                </label>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label>Radio Buttons</label>
-                                                                <div class="radio">
-                                                                    <label>
-                                                                        <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>Radio 1
-                                                                    </label>
-                                                                </div>
-                                                                <div class="radio">
-                                                                    <label>
-                                                                        <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">Radio 2
-                                                                    </label>
-                                                                </div>
-                                                                <div class="radio">
-                                                                    <label>
-                                                                        <input type="radio" name="optionsRadios" id="optionsRadios3" value="option3">Radio 3
-                                                                    </label>
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label>Inline Radio Buttons</label>
-                                                                <label class="radio-inline">
-                                                                    <input type="radio" name="optionsRadiosInline" id="optionsRadiosInline1" value="option1" checked>1
-                                                                </label>
-                                                                <label class="radio-inline">
-                                                                    <input type="radio" name="optionsRadiosInline" id="optionsRadiosInline2" value="option2">2
-                                                                </label>
-                                                                <label class="radio-inline">
-                                                                    <input type="radio" name="optionsRadiosInline" id="optionsRadiosInline3" value="option3">3
-                                                                </label>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label>Multiple Selects</label>
-                                                                <select multiple class="form-control">
-                                                                    <option>1</option>
-                                                                    <option>2</option>
-                                                                    <option>3</option>
-                                                                    <option>4</option>
-                                                                    <option>5</option>
-                                                                </select>
-                                                            </div>
-                            -->
-                            <input type="button" id="botao" class="btn btn-default" value="Cadastrar" />
-                            <button type="reset" class="btn btn-default">Limpar</button>
+                                <br/>
+                            </div>
+                            <div class="col-lg-5 form-group">
+                                <label>Selecione as imagens</label>
+                                <input type="file" multiple class="form-control" id="imagensItem" name="imagensItem">
+                                <p class="help-block">Somente imagens: jpeg, png.</p>
+
+                                <input type="button" id="botao" class="btn btn-default" value="Cadastrar" />
+                                <button type="reset" class="btn btn-default">Limpar</button>
+                            </div>
                             <?php echo form_close(); ?>
                         </div>
                         <!-- /.col-lg-6 (nested) -->
@@ -151,18 +88,18 @@
                                                     </tr>
                                                 </thead>
                                                 <!--<tbody>-->  
-                                                    <?php
-                                                    foreach( $item->result() as $item ){
-                                                        echo "<tr class = 'odd gradeX'>" .
-                                                        "<td data-id='".$item->id."'>" . $item->id . "</td>" .
-                                                        "<td data-nome='".$item->nome."'>" . $item->nome . "</td>" .
-                                                        "<td>" . ($item->status == 1 ? 'Ativo' : 'Inativo') . "</td>" .
-                                                        "<td>" . $item->data_criacao . "</td>" .
-                                                        "<td>" . $item->data_modificacao . "</td>" .
-                                                        "<td><button class='btn-info'>Editar</button>" .
-                                                        "<td><button class='btn-danger'>Excluir</button>" .
-                                                        "</tr>";
-                                                    }
+                                                <?php
+                                                foreach ($item->result() as $item) {
+                                                    echo "<tr class = 'odd gradeX'>" .
+                                                    "<td data-id='" . $item->id . "'>" . $item->id . "</td>" .
+                                                    "<td data-nome='" . $item->nome . "'>" . $item->nome . "</td>" .
+                                                    "<td>" . ($item->status == 1 ? 'Ativo' : 'Inativo') . "</td>" .
+                                                    "<td>" . $item->data_criacao . "</td>" .
+                                                    "<td>" . $item->data_modificacao . "</td>" .
+                                                    "<td><button class='btn-info'>Editar</button>" .
+                                                    "<td><button class='btn-danger'>Excluir</button>" .
+                                                    "</tr>";
+                                                }
 //                                                    <tr class = "even gradeC">
 //                                                    <td>Trident</td>
 //                                                    <td>Internet Explorer 5.0</td>
@@ -170,7 +107,7 @@
 //                                                    <td class = "center">5</td>
 //                                                    <td class = "center">C</td>
 //                                                    </tr>
-                                                    ?>
+                                                ?>
                                                 <!--</tbody>-->
                                             </table>
                                         </div>

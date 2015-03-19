@@ -9,13 +9,13 @@
                 <a href="#"><i class="fa fa-wrench fa-fw"></i> Portfólio<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
                     <li>
-                        <a href="<?php echo base_url() . "index.php/admin/categoria";?>">Categoria</a>
+                        <a href="<?php echo base_url() . "index.php/categoria";?>">Categoria</a>
                     </li>
                     <li>
-                        <a href="<?php echo base_url() . "index.php/admin/produto";?>">Produto</a>
+                        <a href="<?php echo base_url() . "index.php/produto";?>">Produto</a>
                     </li>
                     <li>
-                        <a href="<?php echo base_url() . "index.php/admin/item";?>">Item</a>
+                        <a href="<?php echo base_url() . "index.php/item";?>">Item</a>
                     </li>
                     <li>
                         <a href="#">Usuário</a>
