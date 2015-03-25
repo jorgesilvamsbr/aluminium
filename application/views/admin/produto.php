@@ -18,7 +18,7 @@
                         <div class="col-lg-4 form-group-sm">
                             <?php
                             $attributes = array('id' => 'formProduto');
-                            echo form_open("admin/cadastrarProduto", $attributes);
+                            echo form_open("produto/cadastrarProduto", $attributes);
                             ?>
                             <div class="form-group">
                                 <input class="form-control" id="idProduto" value="-1" type="hidden">

@@ -52,7 +52,7 @@ class Item extends CI_Controller {
         $this->load->library('upload', $config);
 
         if (!$this->upload->do_upload()) {
-            header('Location:' . base_url() . 'index.php/item/item?error=' . urlencode("Bugou! :/ Imagem inválida" . "<br>" . $this->upload->display_errors()));
+            header('Location:' . base_url() . 'index.php/item?error=' . urlencode("Bugou! :/ Imagem inválida" . "<br>" . $this->upload->display_errors()));
             exit();
         } else {
             $this->upload->data();

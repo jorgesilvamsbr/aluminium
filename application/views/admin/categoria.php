@@ -19,9 +19,10 @@
                         <div class="col-lg-6">
                             <?php
                             $attributes = array('id' => 'formCadastro');
-                            echo form_open("admin/cadastrarCategoria", $attributes);
+                            echo form_open("categoria/cadastrarCategoria", $attributes);
                             ?>
                             <div class="form-group">
+                                <input class="form-control" id="url" value="<?php echo base_url() . "index.php/categoria/excluirCategoria"; ?>" type="hidden">
                                 <input class="form-control" id="idCategoria" value="-1" type="hidden">
 
                                 <label>Nome Categoria</label>

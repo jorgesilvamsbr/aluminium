@@ -32,7 +32,7 @@ $(function () {
         $(this).val($("#nomeProduto").val(nome));
         $("#statusProduto option[value='" + status + "']").attr("selected", true);
         $("#categoriaProduto option[value='" + categoria + "']").attr("selected", true);
-        $("#formProduto").attr("action", "../../index.php/admin/editarProduto");
+        $("#formProduto").attr("action", "../../index.php/produto/editarProduto");
         $('html,body').animate({scrollTop: 0}, 'fast');
     });
 });
@@ -51,7 +51,7 @@ $(function () {
             $.ajax({
                 type: "post",
                 data: {idCategoria: id},
-                url: "../../index.php/admin/excluirProduto",
+                url: "../../index.php/produto/excluirProduto",
                 success: function () {
 
 //                                history.go(0);

@@ -1,4 +1,4 @@
-
+//Realiza a validação dos campos em branco
 $(document).ready(function () {
     $("#botao").click(function () {
         var cont = 0;
@@ -27,10 +27,12 @@ $(function () {
         var nome = $(this).closest('tr').find('td[data-nome]').data('nome');
         var status = $(this).closest('tr').find('td[data-status]').data('status');
 
+        alert( id + " " + nome + " " + status );
+
         $(this).val($("#idCategoria").val(id));
         $(this).val($("#nomeCategoria").val(nome));
         $("#statusCategoria option[value='" + status + "']").attr("selected", true);
-        $("#formCadastro").attr("action", "../../index.php/admin/editarCategoria");
+        $("#formCadastro").attr("action", "../index.php/categoria/editarCategoria");
         $('html,body').animate({scrollTop: 0}, 'fast');
     });
 });
@@ -43,22 +45,22 @@ $(function () {
 
         var id = $(this).closest('tr').find('td[data-id]').data('id');
         var nome = $(this).closest('tr').find('td[data-nome]').data('nome');
-
+        var url = $("#url").val();
+        
         if (confirm("Tem certeza que deseja excluir a categoria: " + nome + "?")) {
 
             $.ajax({
                 type: "post",
                 data: {idCategoria: id},
-                url: "../../index.php/admin/excluirCategoria",
+                url: url,
                 success: function () {
-
-//                                history.go(0);
+                    
                     $('html,body').animate({scrollTop: 0}, 'fast');
                     window.location.href = window.location.href;
 
                 },
                 error: function () {
-                    alert("erro");
+                    alert("Calma calma não criemos pânico!\nNossos minions ja estão trabalhando na solução do problema.");
                 }
             });
 

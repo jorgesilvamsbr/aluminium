@@ -41,7 +41,7 @@ class Categoria extends CI_Controller {
         $this->CategoriaModel->setCategoria($data);
 
         // Retorna para a página com a mensagem de sucesso
-        header('Location:' . base_url() . 'index.php/admin/categoria?sucess=' . urlencode('Cadastro realizado com sucesso!'));
+        header('Location:' . base_url() . 'index.php/categoria?sucess=' . urlencode('Cadastro realizado com sucesso!'));
     }
 
     public function editarCategoria() {
@@ -71,59 +71,35 @@ class Categoria extends CI_Controller {
     public function excluirCategoria() {
         //Chama model responsavel pela persistencia
         $this->load->model("CategoriaModel");
-        $this->load->model("ProdutoModel");
 
         // Preenche os campos coma s novas informações
         $idCategoria = $this->input->post("idCategoria");
 
-        $idProdutos = $this->ProdutoModel->getProdutoPorCategoria($idCategoria);
-
         // Exclui as pastas
-        if ($idProdutos->num_rows()) {
-            foreach ($idProdutos->result() as $id) {
-                $this->deletarArquivosItensPorProduto($idCategoria, $id->id);
-            }
-        }
-
-        $this->deletarPastaProdutosPorCategoria($idCategoria);
-
         $nomeAntigoPasta = $this->CategoriaModel->getEspecificCategoria($idCategoria)->row("nome");
-        rmdir("img/portfolio/" . $nomeAntigoPasta);
+        $diretorio = "img/portfolio/" . $nomeAntigoPasta;
+        $this->delTree($diretorio);
 
         // Persiste
+        $this->excluiProdutosPertecentesACategoria($idCategoria);
         $this->CategoriaModel->deleteCategoria($idCategoria);
     }
 
-    public function deletarPastaProdutosPorCategoria($idCategoria) {
-        //Chama model responsavel pela persistencia
-        $this->load->model("CategoriaModel");
+    public function excluiProdutosPertecentesACategoria($idCategoria) {
         $this->load->model("ProdutoModel");
+        $produtosDaCategoria = $this->ProdutoModel->getProdutoPorCategoria($idCategoria);
 
-        $nomeAntigoPasta = $this->CategoriaModel->getEspecificCategoria($idCategoria)->row("nome");
-        $nomePastaProdutos = $this->ProdutoModel->getProdutoPorCategoria($idCategoria);
-
-        if ($nomePastaProdutos->num_rows()) {
-            foreach ($nomePastaProdutos->result() as $path) {
-                rmdir("img/portfolio/" . $nomeAntigoPasta . "/" . $path->nome);
-            }
+        foreach ($produtosDaCategoria->result() as $produtos) {
+            $this->ProdutoModel->deleteProduto($produtos->id);
         }
     }
 
-    public function deletarArquivosItensPorProduto($idCategoria, $idProduto) {
-        //Chama model responsavel pela persistencia
-        $this->load->model("CategoriaModel");
-        $this->load->model("ProdutoModel");
-        $this->load->model("ItemModel");
-        $this->load->model("ImagemItemModel");
-
-        $nomePastaCategoria = $this->CategoriaModel->getEspecificCategoria($idCategoria)->row("nome");
-        $nomePastaProduto = $this->ProdutoModel->getEspecificProduto($idProduto)->row("nome");
-        $idItem = $this->ItemModel->getItemPorProduto($idProduto);
-        $nomeImagensItem = $this->ImagemItemModel->getImagemPorItem($idItem->row('id'));
-
-        foreach ($nomeImagensItem->result() as $file) {
-            unlink("img/portfolio/" . $nomePastaCategoria . "/" . $nomePastaProduto . "/" . $file->nome);
+    public static function delTree($dir) {
+        $files = array_diff(scandir($dir), array('.', '..'));
+        foreach ($files as $file) {
+            (is_dir("$dir/$file")) ? Categoria::delTree("$dir/$file") : unlink("$dir/$file");
         }
+        return rmdir($dir);
     }
 
     private function removeAscento($string) {

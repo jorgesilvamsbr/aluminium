@@ -39,7 +39,7 @@ class Produto extends CI_Controller {
         $data['status'] = $this->input->post("statusProduto");
         $data['data_criacao'] = date('Y-m-d H:i');
 
-        $nomeCategoria = $this->CategoriaModel->getEspecificCategoria($data['id_categoria']);
+        $nomeCategoria = $this->CategoriaModel->getEspecificCategoria($data['id_categoria'])->row('nome');
 
         // Cria a nova pasta com o nome da categoria
         mkdir("img/portfolio/" . $nomeCategoria . "/" . $data['nome'], 0777);
