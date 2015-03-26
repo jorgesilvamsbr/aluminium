@@ -19,7 +19,7 @@
                             <div class="col-lg-5 form-group">
                                 <?php
                                 $attributes = array('id' => 'formItem');
-                                echo form_open("item/cadastrarItem", $attributes);
+                                echo form_open_multipart("item/cadastrarItem", $attributes);
                                 ?>
 
                                 <input class="form-control" id="idItem" value="-1" type="hidden">

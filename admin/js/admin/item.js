@@ -32,7 +32,7 @@ $(function () {
         $(this).val($("#nomeItem").val(nome));
         $("#statusItem option[value='" + status + "']").attr("selected", true);
         $("#categoriaItem option[value='" + categoria + "']").attr("selected", true);
-        $("#formItem").attr("action", "../../index.php/item/editarItem");
+        $("#formItem").attr("action", "../index.php/item/editarItem");
         $('html,body').animate({scrollTop: 0}, 'fast');
     });
 });
@@ -55,7 +55,6 @@ $(function () {
                 url: url,
                 success: function () {
 
-//                                history.go(0);
                     $('html,body').animate({scrollTop: 0}, 'fast');
                     window.location.href = window.location.href;
 

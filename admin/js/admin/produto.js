@@ -31,7 +31,7 @@ $(function () {
         $(this).val($("#idProduto").val(id));
         $(this).val($("#nomeProduto").val(nome));
         $("#statusProduto option[value='" + status + "']").attr("selected", true);
-        $("#idProduto option[value='" + categoria + "']").attr("selected", true);
+        $("#idCategoria option[value='" + categoria + "']").attr("selected", true);
         $("#formProduto").attr("action", "../index.php/produto/editarProduto");
         $('html,body').animate({scrollTop: 0}, 'fast');
     });
