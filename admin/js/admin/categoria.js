@@ -3,13 +3,13 @@ $(document).ready(function () {
     $("#botao").click(function () {
         var cont = 0;
         $("#formCadastro input").each(function () {
-            if ($(this).val() == "")
+            if ($(this).val() === "")
             {
                 $(this).css({"border": "1px solid #F00", "padding": "2px"});
                 cont++;
             }
         });
-        if (cont == 0)
+        if (cont === 0)
         {
             $("#formCadastro").submit();
         } else {

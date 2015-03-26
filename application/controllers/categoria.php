@@ -51,7 +51,7 @@ class Categoria extends CI_Controller {
         $this->load->model("CategoriaModel");
 
         // Preenche os campos coma s novas informações
-        $idCategoria = 13; //$this->input->post("idCategoria");
+        $idCategoria = $this->input->post("idCategoria");
         $data['nome'] = $this->removeAscento($this->input->post("nomeCategoria"));
         $data['status'] = $this->input->post("statusCategoria");
 
@@ -90,11 +90,21 @@ class Categoria extends CI_Controller {
         $produtosDaCategoria = $this->ProdutoModel->getProdutoPorCategoria($idCategoria);
 
         foreach ($produtosDaCategoria->result() as $produtos) {
-            $this->ProdutoModel->deleteProduto($produtos->id);
+            $this->excluiItensPertecentesAoProduto( $produtos->id );
+            $this->ProdutoModel->deleteProduto( $produtos->id );
         }
     }
 
-    public static function delTree($dir) {
+    public function excluiItensPertecentesAoProduto($idProduto) {
+        $this->load->model("ItemModel");
+        $itensDoProduto = $this->ProdutoModel->getItemPorProduto($idProduto);
+
+        foreach ($itensDoProduto->result() as $itens) {
+            $this->ItemModel->deleteItem($itens->id);
+        }
+    }
+
+    private static function delTree($dir) {
         $files = array_diff(scandir($dir), array('.', '..'));
         foreach ($files as $file) {
             (is_dir("$dir/$file")) ? Categoria::delTree("$dir/$file") : unlink("$dir/$file");

@@ -34,7 +34,7 @@ class Produto extends CI_Controller {
         //Define a zona para captura da data
         date_default_timezone_set('America/Sao_Paulo');
 
-        $data['id_categoria'] = $this->removeAscento($this->input->post("categoriaProduto"));
+        $data['id_categoria'] = $this->removeAscento($this->input->post("idCategoria"));
         $data['nome'] = $this->removeAscento($this->input->post("nomeProduto"));
         $data['status'] = $this->input->post("statusProduto");
         $data['data_criacao'] = date('Y-m-d H:i');
@@ -51,36 +51,135 @@ class Produto extends CI_Controller {
         header('Location:' . base_url() . 'index.php/produto?sucess=' . urlencode('Cadastro realizado com sucesso!'));
     }
 
-    public function deletarPastaProdutosPorCategoria($idCategoria) {
+    public function editarProduto() {
+        $this->load->helper('url');
+
         //Chama model responsavel pela persistencia
-        $this->load->model("CategoriaModel");
         $this->load->model("ProdutoModel");
+        $this->load->model("CategoriaModel");
 
-        $nomeAntigoPasta = $this->CategoriaModel->getEspecificCategoria($idCategoria)->row("nome");
-        $nomePastaProdutos = $this->ProdutoModel->getProdutoPorCategoria($idCategoria);
+        // Preenche os campos coma s novas informações
+        $idProduto = $this->input->post("idProduto");
+        $data["id_categoria"] = $this->input->post("idCategoria");
+        $data["nome"] = $this->removeAscento($this->input->post("nomeProduto"));
+        $data["status"] = $this->input->post("statusProduto");
 
-        if ($nomePastaProdutos->num_rows()) {
-            foreach ($nomePastaProdutos->result() as $path) {
-                rmdir("img/portfolio/" . $nomeAntigoPasta . "/" . $path->nome);
+        // Caso necessário renomeia a pasta produto
+        $this->renomeiaPastaProduto($idProduto, $data["nome"]);
+
+        // Caso houve mudança de categoria realiza a cópia dos arquivos para a nova categoria e exclui da antiga categoria
+        $caminhodaPasta = $this->reuperaOrigemEDestinoDaNovaPastaDoProduto($idProduto, $data["id_categoria"]);
+        $this->copiaArquivosEPastas($caminhodaPasta["origem"], $caminhodaPasta["destino"]);
+        $this->delTree($caminhodaPasta["origem"]);
+        
+        // Persiste
+        $this->ProdutoModel->updateProduto($idProduto, $data);
+
+        // Retorna para a página com a mensagem de sucesso
+        header('Location:' . base_url() . 'index.php/produto?sucess=' . urlencode('Cadastro realizado com sucesso!'));
+    }
+
+    public function excluirProduto() {
+        //Chama model responsavel pela persistencia
+        $this->load->model("ProdutoModel");
+        $this->load->model("CategoriaModel");
+
+        // Preenche os campos coma s novas informações
+        $idProduto = $this->input->post("idProduto");
+        
+        // Exclui as pastas
+        $informacoesDoProduto = $this->ProdutoModel->getEspecificProduto($idProduto);
+        $nomeDoProduto = $informacoesDoProduto->row('nome');
+        $idCategoriaDoProduto = $informacoesDoProduto->row('id_categoria');
+        $nomeDaCategoria = $this->CategoriaModel->getEspecificCategoria($idCategoriaDoProduto)->row('nome');
+        $diretorio = "img/portfolio/" . $nomeDaCategoria . "/" . $nomeDoProduto;
+
+        $this->delTree($diretorio);
+
+        // Persiste
+        $this->excluiItensPertecentesAoProduto($idProduto);
+        $this->ProdutoModel->deleteProduto($idProduto);
+    }
+
+    public function excluiItensPertecentesAoProduto($idProduto) {
+        $this->load->model("ItemModel");
+        $itensDoProduto = $this->ItemModel->getItemPorProduto($idProduto);
+
+        if ($itensDoProduto->num_rows() > 0) {
+            foreach ($itensDoProduto->result() as $itens) {
+                $this->ItemModel->deleteItem($itens->id);
             }
         }
     }
 
-    public function deletarArquivosItensPorProduto($idCategoria, $idProduto) {
-        //Chama model responsavel pela persistencia
-        $this->load->model("CategoriaModel");
-        $this->load->model("ProdutoModel");
-        $this->load->model("ItemModel");
-        $this->load->model("ImagemItemModel");
-
-        $nomePastaCategoria = $this->CategoriaModel->getEspecificCategoria($idCategoria)->row("nome");
-        $nomePastaProduto = $this->ProdutoModel->getEspecificProduto($idProduto)->row("nome");
-        $idItem = $this->ItemModel->getItemPorProduto($idProduto);
-        $nomeImagensItem = $this->ImagemItemModel->getImagemPorItem($idItem->row('id'));
-
-        foreach ($nomeImagensItem->result() as $file) {
-            unlink("img/portfolio/" . $nomePastaCategoria . "/" . $nomePastaProduto . "/" . $file->nome);
+    private static function delTree($dir) {
+        $files = array_diff(scandir($dir), array('.', '..'));
+        foreach ($files as $file) {
+            (is_dir("$dir/$file")) ? Categoria::delTree("$dir/$file") : unlink("$dir/$file");
         }
+        return rmdir($dir);
+    }
+
+    private function copiaArquivosEPastas($source, $dest) {
+        // COPIA UM ARQUIVO
+        if (is_file($source)) {
+            return copy($source, $dest);
+        }
+
+        // CRIA O DIRETÓRIO DE DESTINO
+        if (!is_dir($dest)) {
+            mkdir($dest);
+        }
+
+        // FAZ LOOP DENTRO DA PASTA
+        $dir = dir($source);
+        while (false !== $entry = $dir->read()) {
+            // PULA "." e ".."
+            if ($entry == '.' || $entry == '..') {
+                continue;
+            }
+
+            // COPIA TUDO DENTRO DOS DIRETÓRIOS
+            if ($dest !== "$source/$entry") {
+                $this->copiaArquivosEPastas("$source/$entry", "$dest/$entry");
+            }
+        }
+
+        $dir->close();
+        return true;
+    }
+
+    private function reuperaOrigemEDestinoDaNovaPastaDoProduto($idProduto, $idDaNovaCategoria){
+            //Chama model responsavel pela persistencia
+        $this->load->model("ProdutoModel");
+        $this->load->model("CategoriaModel");
+
+        // Renomeia a pasta com o novo nome da categoria
+        $idDaPastaCategoria = $this->ProdutoModel->getEspecificProduto($idProduto)->row('id_categoria');
+        $nomeAntigoDaPastaCategoria = $this->CategoriaModel->getEspecificCategoria($idDaPastaCategoria)->row("nome");
+        $nomeDaNovaPastaCategoria = $this->CategoriaModel->getEspecificCategoria($idDaNovaCategoria)->row("nome");
+        $nomeDaPastaProduto = $this->ProdutoModel->getEspecificProduto($idProduto)->row("nome");
+        
+        $origem = "img/portfolio/" . $nomeAntigoDaPastaCategoria . "/". $nomeDaPastaProduto;
+        $destino = "img/portfolio/" . $nomeDaNovaPastaCategoria . "/". $nomeDaPastaProduto;
+        
+        return array("origem" => $origem, "destino" => $destino);
+    }
+    
+    private function renomeiaPastaProduto($idProduto, $novoNomeDoProduto) {
+        //Chama model responsavel pela persistencia
+        $this->load->model("ProdutoModel");
+        $this->load->model("CategoriaModel");
+
+        // Renomeia a pasta com o novo nome da categoria
+        $idDaPastaCategoria = $this->ProdutoModel->getEspecificProduto($idProduto)->row('id_categoria');
+        $nomeDaPastaCategoria = $this->CategoriaModel->getEspecificCategoria($idDaPastaCategoria)->row("nome");
+        $nomeAntigoDaPastaProduto = $this->ProdutoModel->getEspecificProduto($idProduto)->row("nome");
+
+        if ($nomeAntigoDaPastaProduto != $novoNomeDoProduto) {
+            rename("img/portfolio/" . $nomeDaPastaCategoria . "/" . $nomeAntigoDaPastaProduto, "img/portfolio/" . $nomeDaPastaCategoria . "/" . $novoNomeDoProduto);
+        }
+        
     }
 
     private function removeAscento($string) {

@@ -21,9 +21,10 @@
                             echo form_open("produto/cadastrarProduto", $attributes);
                             ?>
                             <div class="form-group">
-                                <input class="form-control" id="idProduto" value="-1" type="hidden">
+                                <input class="form-control" id="url" value="<?php echo base_url() . "index.php/produto/excluirProduto";?>" type="hidden">
+                                <input class="form-control" id="idProduto" name="idProduto" value="-1" type="hidden">
                                 <label>Nome Categoria</label>
-                                <select class="form-control" name="categoriaProduto" id="categoriaProduto">
+                                <select class="form-control" name="idCategoria" id="idCategoria">
                                     <?php
                                     foreach ($categoria->result() as $row) {
                                         echo "<option value='" . $row->id . "'>" . $row->nome . "</option>";
