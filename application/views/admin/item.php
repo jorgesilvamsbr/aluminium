@@ -21,8 +21,8 @@
                                 $attributes = array('id' => 'formItem');
                                 echo form_open_multipart("item/cadastrarItem", $attributes);
                                 ?>
-
                                 <input class="form-control" id="idItem" value="-1" type="hidden">
+                                <input class="form-control" id="idDoProdutoDoItem" value="-1" type="hidden">
 
                                 <label>Nome Produto</label>
                                 <select class="form-control" name="idProduto" id="idProduto">
@@ -50,12 +50,15 @@
                                 <br/>
                             </div>
                             <div class="col-lg-5 form-group">
+
                                 <label>Selecione as imagens</label>
-                                <input type="file" multiple class="form-control" id="imagensItem" name="imagensItem">
+                                <input type="file" multiple class="form-control" id="filename" name="filename[]">
                                 <p class="help-block">Somente imagens: jpeg, png.</p>
 
                                 <input type="button" id="botao" class="btn btn-default" value="Cadastrar" />
                                 <button type="reset" class="btn btn-default">Limpar</button>
+
+                                <div id="uploadItemTeste"> </div>
                             </div>
                             <?php echo form_close(); ?>
                         </div>
@@ -79,6 +82,7 @@
                                                 <thead>
                                                     <tr>
                                                         <th>Id</th>
+                                                        <th>Id Produto</th>
                                                         <th>Nome</th>
                                                         <th>Status</th>
                                                         <th>Data de Registro</th>
@@ -92,6 +96,7 @@
                                                 foreach ($item->result() as $item) {
                                                     echo "<tr class = 'odd gradeX'>" .
                                                     "<td data-id='" . $item->id . "'>" . $item->id . "</td>" .
+                                                    "<td data-idProduto='" . $item->id_produto . "'>" . $item->id_produto . "</td>" .
                                                     "<td data-nome='" . $item->nome . "'>" . $item->nome . "</td>" .
                                                     "<td>" . ($item->status == 1 ? 'Ativo' : 'Inativo') . "</td>" .
                                                     "<td>" . $item->data_criacao . "</td>" .

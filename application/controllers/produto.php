@@ -86,14 +86,13 @@ class Produto extends CI_Controller {
 
         // Preenche os campos coma s novas informações
         $idProduto = $this->input->post("idProduto");
-        
-        // Exclui as pastas
         $informacoesDoProduto = $this->ProdutoModel->getEspecificProduto($idProduto);
         $nomeDoProduto = $informacoesDoProduto->row('nome');
         $idCategoriaDoProduto = $informacoesDoProduto->row('id_categoria');
         $nomeDaCategoria = $this->CategoriaModel->getEspecificCategoria($idCategoriaDoProduto)->row('nome');
-        $diretorio = "img/portfolio/" . $nomeDaCategoria . "/" . $nomeDoProduto;
 
+        // Exclui as pastas
+        $diretorio = "img/portfolio/" . $nomeDaCategoria . "/" . $nomeDoProduto;
         $this->delTree($diretorio);
 
         // Persiste

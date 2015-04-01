@@ -19,6 +19,12 @@ class ItemModel extends CI_Model {
         return $this->db->get('item');
     }
 
+    public function getUltimoItem() {
+        $this->load->database();
+        $this->db->select_max('id');
+        return $this->db->get('item');
+    }
+
     public function setItem($data) {
         $this->load->database();
         $this->db->insert("item", $data);
@@ -34,6 +40,22 @@ class ItemModel extends CI_Model {
         $this->load->database();
         $this->db->where("id", $idItem);
         $this->db->delete("item");
+    }
+
+    public function deleteImagensItem($idItem) {
+        $this->load->database();
+        $this->db->where("id_item", $idItem);
+        $query = $this->db->get("imagem_item");
+        
+        for($i=0; i< $query->num_rows(); $i++){
+            $this->db->where("id", $query->row('id')); 
+            $this->db->delete("imagem_item");
+        }
+    }
+
+    public function setImagensItem($data) {
+        $this->load->database();
+        $this->db->insert('imagem_item', $data);
     }
 
     public function getItemPorProduto($idProduto) {

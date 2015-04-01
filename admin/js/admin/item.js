@@ -44,14 +44,15 @@ $(function () {
         e.preventDefault;
 
         var id = $(this).closest('tr').find('td[data-id]').data('id');
+        var idDoProdutoDoItem = $(this).closest('tr').find('td[data-idProduto]').data('idProduto');
         var nome = $(this).closest('tr').find('td[data-nome]').data('nome');
         var url = $("#url").val();
-        
+
         if (confirm("Tem certeza que deseja excluir o produto: " + nome + "?")) {
 
             $.ajax({
                 type: "post",
-                data: {idCategoria: id},
+                data: {idItem: id, idDoProdutoDoItem: idDoProdutoDoItem},
                 url: url,
                 success: function () {
 
