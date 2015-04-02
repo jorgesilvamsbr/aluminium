@@ -60,7 +60,7 @@ $(function () {
 
                 },
                 error: function () {
-                    alert("erro");
+                    alert("Calma calma não criemos pânico!\nNossos minions ja estão trabalhando na solução do problema.");
                 }
             });
 

@@ -22,7 +22,7 @@
                                 echo form_open_multipart("item/cadastrarItem", $attributes);
                                 ?>
                                 <input class="form-control" id="idItem" value="-1" type="hidden">
-                                <input class="form-control" id="idDoProdutoDoItem" value="-1" type="hidden">
+                                <input class="form-control" id="url" value="<?php echo base_url() . "index.php/item/excluirItem"; ?>" type="hidden">
 
                                 <label>Nome Produto</label>
                                 <select class="form-control" name="idProduto" id="idProduto">
@@ -81,7 +81,7 @@
                                             <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                                                 <thead>
                                                     <tr>
-                                                        <th>Id</th>
+                                                        <th>Id do Item</th>
                                                         <th>Id Produto</th>
                                                         <th>Nome</th>
                                                         <th>Status</th>
@@ -96,7 +96,7 @@
                                                 foreach ($item->result() as $item) {
                                                     echo "<tr class = 'odd gradeX'>" .
                                                     "<td data-id='" . $item->id . "'>" . $item->id . "</td>" .
-                                                    "<td data-idProduto='" . $item->id_produto . "'>" . $item->id_produto . "</td>" .
+                                                    "<td>" . $item->id_produto . "</td>" .
                                                     "<td data-nome='" . $item->nome . "'>" . $item->nome . "</td>" .
                                                     "<td>" . ($item->status == 1 ? 'Ativo' : 'Inativo') . "</td>" .
                                                     "<td>" . $item->data_criacao . "</td>" .

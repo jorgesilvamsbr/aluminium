@@ -44,24 +44,23 @@ $(function () {
         e.preventDefault;
 
         var id = $(this).closest('tr').find('td[data-id]').data('id');
-        var idDoProdutoDoItem = $(this).closest('tr').find('td[data-idProduto]').data('idProduto');
         var nome = $(this).closest('tr').find('td[data-nome]').data('nome');
         var url = $("#url").val();
-
+        
         if (confirm("Tem certeza que deseja excluir o produto: " + nome + "?")) {
 
             $.ajax({
                 type: "post",
-                data: {idItem: id, idDoProdutoDoItem: idDoProdutoDoItem},
+                data: {idItem: id},
                 url: url,
                 success: function () {
-
+                    
                     $('html,body').animate({scrollTop: 0}, 'fast');
                     window.location.href = window.location.href;
 
                 },
                 error: function () {
-                    alert("erro");
+                    alert("Calma calma não criemos pânico!\nNossos minions ja estão trabalhando na solução do problema.");
                 }
             });
 

@@ -60,7 +60,7 @@ class Item extends CI_Controller {
         for ($i = 0; $i < $quantidadeDeImagens; $i++) {
 
             // Aplica as configurações do arquivo
-            $config = $this->aplicaConfiguracoesDoArquivo($arquivos, $pastaItem, $i);
+            $config = $this->aplicaConfiguracoesDoArquivo($arquivos, $pastaItem);
 
             $this->load->library('upload', $config);
 
@@ -105,13 +105,15 @@ class Item extends CI_Controller {
         $this->load->model('CategoriaModel');
 
         // Caminho de onde a imagem ficará
-        $nomeProdutoItem = $this->ProdutoModel->getEspecificProduto( $id_produto )->row('nome');
-        $idCategoriaItem = $this->ProdutoModel->getEspecificProduto( $id_produto )->row('id_categoria');
+        $nomeProdutoItem = $this->ProdutoModel->getEspecificProduto($id_produto)->row('nome');
+        $idCategoriaItem = $this->ProdutoModel->getEspecificProduto($id_produto)->row('id_categoria');
         $nomeCategoriaItem = $this->CategoriaModel->getEspecificCategoria($idCategoriaItem)->row('nome');
-        
+
         $pastaItem = "img/portfolio/" . $nomeCategoriaItem . "/" . $nomeProdutoItem . "/" . $idItem;
 
-        mkdir($pastaItem);
+        if (!is_dir($pastaItem)) {
+            mkdir($pastaItem);
+        }
 
         return $pastaItem .= "/";
     }
@@ -135,18 +137,15 @@ class Item extends CI_Controller {
 
     public function excluirItem() {
         $this->load->model("ItemModel");
-        $idItem = 6;//$this->input->post("idItem");
-        $idDoProdutoDoItem = 7;//$this->input->post("idDoProdutoDoItem");
-        
-        $item = $this->ItemModel->getEspecificItem($idItem);
+        $idItem = $this->input->post("idItem");
+        $idDoProdutoDoItem = $this->ItemModel->getEspecificItem($idItem)->row("id_produto");
 
-        $this->ItemModel->deleteImagensItem($item->row('id'));
-        $this->ItemModel->deleteItem($item->row('id'));
-        
-        $diretorio = $this->criarPastaDoItem( $idItem, $idDoProdutoDoItem );
-        
-        $this->delTree( $diretorio );
-        
+        $this->ItemModel->deleteImagensItem($idItem);
+        $this->ItemModel->deleteItem($idItem);
+
+        $diretorio = $this->criarPastaDoItem($idItem, $idDoProdutoDoItem);
+
+        $this->delTree($diretorio);
     }
 
     private static function delTree($dir) {

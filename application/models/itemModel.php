@@ -47,8 +47,8 @@ class ItemModel extends CI_Model {
         $this->db->where("id_item", $idItem);
         $query = $this->db->get("imagem_item");
         
-        for($i=0; i< $query->num_rows(); $i++){
-            $this->db->where("id", $query->row('id')); 
+        foreach($query->result() as $nomeDaImagemDoItem){
+            $this->db->where("id", $nomeDaImagemDoItem->id); 
             $this->db->delete("imagem_item");
         }
     }
