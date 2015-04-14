@@ -8,8 +8,8 @@ class ImagemItemModel extends CI_Model {
 
     public function getImagemItem() {
         $this->load->database();
-        $this->db->order_by("nome", "asc");
-        return $this->db->get('imagem');
+        $this->db->order_by("id", "asc");
+        return $this->db->get('imagem_item');
     }
 
     public function getEspecificImagemItem($idItem) {
@@ -39,7 +39,7 @@ class ImagemItemModel extends CI_Model {
     public function getImagemPorItem( $idItem ) {
         $this->load->database();
         $this->db->where("id_item", $idItem );
-        return $this->db->get('imagem');
+        return $this->db->get('imagem_item');
     }
 
 }
