@@ -12,10 +12,16 @@ class Site extends CI_Controller {
         //Models
         $this->load->model('categoriaModel');
         $this->load->model('produtoModel');
+        $this->load->model('itemModel');
+        $this->load->model('imagemItemModel');
+       
+        
         
         
         $data['categorias'] = $this->categoriaModel->getCategoria();
         $data['produtos'] = $this->produtoModel->getProduto();
+        $data['itens'] = $this->itemModel->getItemDesc();
+        $data['imagens'] = $this->imagemItemModel->getImagemItem();
         
         $this->load->view('site/header', $data);
         $this->load->view('site/index');        
@@ -111,10 +117,12 @@ class Site extends CI_Controller {
         //Models
         $this->load->model('categoriaModel');
         $this->load->model('produtoModel');
-        
+        $this->load->model('sobreModel');
         
         $data['categorias'] = $this->categoriaModel->getCategoria();
         $data['produtos'] = $this->produtoModel->getProduto();
+        $data['sobre'] = $this->sobreModel->getSobre();
+        
         
         $this->load->view('site/header', $data);
         $this->load->view('site/sobre');        

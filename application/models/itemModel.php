@@ -11,6 +11,12 @@ class ItemModel extends CI_Model {
         $this->db->order_by("nome", "asc");
         return $this->db->get('item');
     }
+    
+    public function getItemDesc() {
+        $this->load->database();
+        $this->db->order_by("id", "desc");
+        return $this->db->get('item');
+    }
 
     public function getEspecificItem($idItem) {
         $this->load->database();

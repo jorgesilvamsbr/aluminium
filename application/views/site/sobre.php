@@ -12,14 +12,14 @@
     <div class="container">
         <div class="row">
             <div class="col-sm-6">
-                <h3>We are leading company</h3>
-                <p>
-                    Donec elementum mi vitae enim fermentum lobortis. In hac habitasse platea dictumst. Ut pellentesque, orci sed mattis consequat, libero ante lacinia arcu, ac porta lacus urna in lorem. Praesent consectetur tristique augue, eget elementum diam suscipit id.
-                </p>
-                <h3>Wide range of services</h3>
-                <p>
-                    Interdum et malesuada fames ac ante ipsum primis in faucibus. Nam condimentum laoreet sagittis. Duis quis ullamcorper leo. Suspendisse potenti.
-                </p>
+                <h3>Sobre Nós</h3>
+                
+                <?php 
+                 foreach($sobre->result() as $sobre)
+                 {
+                     echo $sobre->sobre;
+                 }
+                ?>
             </div>
             <div class="col-sm-6">
                 <div class="video-wrapper">
@@ -29,19 +29,20 @@
         </div>
     </div>
 </div>
-
-<!-- Press Coverage -->
-<div class="section">
+<!--
+ Press Coverage 
+-->
+<!--<div class="section">
     <div class="container">
         <h2>Featured on</h2>
         <div class="row">
             <div class="col-md-4 col-sm-6">
-                <div class="in-press press-wired">
+                <div class="in-press">
                     <a href="#">Morbi eleifend congue elit nec sagittis. Praesent aliquam lobortis tellus, nec consequat vitae</a>
                 </div>
             </div>
             <div class="col-md-4 col-sm-6">
-                <div class="in-press press-mashable">
+                <div class="in-press">
                     <a href="#">Morbi eleifend congue elit nec sagittis. Praesent aliquam lobortis tellus, nec consequat vitae</a>
                 </div>
             </div>
@@ -52,8 +53,10 @@
             </div>
         </div>
     </div>
-</div>
-<!-- Press Coverage -->
+</div>-->
+
+<!--
+ Press Coverage 
 
 <div class="section">
     <div class="container">
@@ -117,4 +120,4 @@
             </div>
         </div>
     </div>
-</div>
+</div>-->

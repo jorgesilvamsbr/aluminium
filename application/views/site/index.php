@@ -43,7 +43,7 @@
         </div>
         <!-- End Homepage Slider -->
 
-        <div class="section section-white">
+<!--        <div class="section section-white">
             <div class="container">
                 <div class="row">
                     <div class="col-md-6">
@@ -63,57 +63,60 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div>-->
 
         <div class="section">
             <div class="container">
                 <h2>Novidades</h2>
                 <div class="row">
-                    <div class="col-md-4 col-sm-6">
-                        <div class="portfolio-item">
-                            <div class="portfolio-image">
-                                <a href="page-portfolio-item.html"><img src="img/portfolio1.jpg" alt="Project Name"></a>
-                            </div>
-                            <div class="portfolio-info">
-                                <ul>
-                                    <li class="portfolio-project-name">Nome Produto</li>
-                                    <li>Website design & Development</li>
-                                    <li>Cliente: Some Client LTD</li>
-                                    <li class="read-more"><a href="page-portfolio-item.html" class="btn">Leia mais</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4 col-sm-6">
-                        <div class="portfolio-item">
-                            <div class="portfolio-image">
-                                <a href="page-portfolio-item.html"><img src="img/portfolio2.jpg" alt="Project Name"></a>
-                            </div>
-                            <div class="portfolio-info">
-                                <ul>
-                                    <li class="portfolio-project-name">Nome Produto</li>
-                                    <li>Website design & Development</li>
-                                    <li>Cliente: Some Client LTD</li>
-                                    <li class="read-more"><a href="page-portfolio-item.html" class="btn">Leia mais</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4 col-sm-6">
-                        <div class="portfolio-item">
-                            <div class="portfolio-image">
-                                <a href="page-portfolio-item.html"><img src="img/portfolio3.jpg" alt="Project Name"></a>
-                            </div>
-                            <div class="portfolio-info">
-                                <ul>
-                                    <li class="portfolio-project-name">Nome Produto</li>
-                                    <li>Website design & Development</li>
-                                    <li>Cliente: Some Client LTD</li>
-                                    <li class="read-more"><a href="page-portfolio-item.html" class="btn">Leia mais</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
+                    <?php
+                    $count = 1;
+                    foreach($itens->result() as $item)
+                    {
+                        
+                        foreach($produtos->result() as $pro)
+                        {
+                            if($pro->id == $item->id_produto)
+                            {
+                                $id_produto = $pro->id;
+                                $id_categoria = $pro->id_categoria;
+                                break;
+                            }
+                        }
+                        
+                        foreach($imagens->result() as $img)
+                        {
+                            if($img->id_item == $item->id)
+                            {
+                                $img_nome = $img->nome;
+                                break;
+                            }
+                        }
+                        
+                        
+                            
+                        echo "<div class='col-md-4 col-sm-6'>";
+                        echo "<div class='portfolio-item'>";
+                        echo "<div class='portfolio-image'>";
+                        echo "<a href='page-portfolio-item.html'><img src='" . base_url() . "img/" . $id_categoria . "/" . $id_produto . "/" . $item->id . "/" . $img_nome . "'></a>";
+                        echo "</div>";
+                        echo "<div class='portfolio-info'>";
+                        echo "<ul>";
+                        echo "<li class='portfolio-project-name'>" . $item->nome . "</li>";
+                        echo "<li>" . substr($item->descricao, 0, 40) . "...</li>";
+//                        echo "<li>Cliente: Some Client LTD</li>";
+                        echo "<li class='read-more'><a href='page-portfolio-item.html' class='btn'>Leia mais</a></li>";
+                        echo "</ul>";
+                        echo "</div>";
+                        echo "</div>";
+                        echo "</div>";
+                        if($count == 3)
+                            break;
+                        
+                        $count++;
+                    }
+                    
+                    ?>
                 </div>
             </div>
         </div>
@@ -180,27 +183,5 @@
             </div>
         </div>
         <!-- End Testimonials -->
-
-        <!-- Our Clients -->
-        <div class="section">
-            <div class="container">
-                <h2>Nossos Clientes</h2>
-                <div class="clients-logo-wrapper text-center row">
-                    <div class="col-lg-1 col-md-1 col-sm-3 col-xs-6"><a href="#"><img src="<?php echo base_url() . '/img/logos/canon.png'?>" alt="Client Name"></a></div>
-                    <div class="col-lg-1 col-md-1 col-sm-3 col-xs-6"><a href="#"><img src="<?php echo base_url() . '/img/logos/cisco.png'?>" alt="Client Name"></a></div>
-                    <div class="col-lg-1 col-md-1 col-sm-3 col-xs-6"><a href="#"><img src="<?php echo base_url() . '/img/logos/dell.png'?>" alt="Client Name"></a></div>
-                    <div class="col-lg-1 col-md-1 col-sm-3 col-xs-6"><a href="#"><img src="<?php echo base_url() . '/img/logos/ea.png'?>" alt="Client Name"></a></div>
-                    <div class="col-lg-1 col-md-1 col-sm-3 col-xs-6"><a href="#"><img src="<?php echo base_url() . '/img/logos/ebay.png'?>" alt="Client Name"></a></div>
-                    <div class="col-lg-1 col-md-1 col-sm-3 col-xs-6"><a href="#"><img src="<?php echo base_url() . '/img/logos/facebook.png'?>" alt="Client Name"></a></div>
-                    <div class="col-lg-1 col-md-1 col-sm-3 col-xs-6"><a href="#"><img src="<?php echo base_url() . '/img/logos/google.png'?>" alt="Client Name"></a></div>
-                    <div class="col-lg-1 col-md-1 col-sm-3 col-xs-6"><a href="#"><img src="<?php echo base_url() . '/img/logos/hp.png'?>" alt="Client Name"></a></div>
-                    <div class="col-lg-1 col-md-1 col-sm-3 col-xs-6"><a href="#"><img src="<?php echo base_url() . '/img/logos/microsoft.png'?>" alt="Client Name"></a></div>
-                    <div class="col-lg-1 col-md-1 col-sm-3 col-xs-6"><a href="#"><img src="<?php echo base_url() . '/img/logos/mysql.png'?>" alt="Client Name"></a></div>
-                    <div class="col-lg-1 col-md-1 col-sm-3 col-xs-6"><a href="#"><img src="<?php echo base_url() . '/img/logos/sony.png'?>" alt="Client Name"></a></div>
-                    <div class="col-lg-1 col-md-1 col-sm-3 col-xs-6"><a href="#"><img src="<?php echo base_url() . '/img/logos/yahoo.png'?>" alt="Client Name"></a></div>
-                </div>
-            </div>
-        </div>
-        <!-- End Our Clients -->
     </body>
 </html>
