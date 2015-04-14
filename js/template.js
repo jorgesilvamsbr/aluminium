@@ -16,19 +16,20 @@ $(document).ready(function(){
     //Main menu Initialization
     mainMenu.init();
 
-	//Products slider
-	var produxtsSlider = $('.products-slider').bxSlider({
-		slideWidth: $('.products-slider .shop-item').outerWidth()-20, //Gets slide width
-		responsive: true,
-		minSlides: 1,
-		maxSlides: 4,
-		slideMargin: 20,
-		auto: true,
-		autoHover: true,
-		speed: 800,
-		pager: true,
-		controls: false
-	});
+//COMENTADO EM 31/03
+//	//Products slider
+//	var produxtsSlider = $('.products-slider').bxSlider({
+//		slideWidth: $('.products-slider .shop-item').outerWidth()-20, //Gets slide width
+//		responsive: true,
+//		minSlides: 1,
+//		maxSlides: 4,
+//		slideMargin: 20,
+//		auto: true,
+//		autoHover: true,
+//		speed: 800,
+//		pager: true,
+//		controls: false
+//	});
 
 	//Make Videos Responsive
 	$(".video-wrapper").fitVids();
@@ -39,14 +40,14 @@ $(document).ready(function(){
 	//Contact Us Map
 	if($('#contact-us-map').length > 0){ //Checks if there is a map element
 		var map = L.map('contact-us-map', {
-			center: [51.502, -0.09],
+			center: [-20.475309, -54.613738],
 			scrollWheelZoom: false,
 			zoom: 15
 		});
 		L.tileLayer('http://{s}.tile.cloudmade.com/{key}/22677/256/{z}/{x}/{y}.png', {
 			key: 'BC9A493B41014CAABB98F0471D759707'
 		}).addTo(map);
-		L.marker([51.5, -0.09]).addTo(map).bindPopup("<b>Some Company</b><br/>123 Fake Street<br/>LN1 2ST<br/>London</br>United Kingdom").openPopup();
+		L.marker([51.5, -0.09]).addTo(map).bindPopup("<b>Aluminium Center</b><br/>Rua Treze de Maio, 1123<br/> - Centro<br/>Campo Grande - MS</br>79004-423").openPopup();
 	}
 
 	$( window ).resize(function() {
