@@ -26,44 +26,6 @@ class Item extends CI_Controller {
         $this->load->view('admin/footer');
     }
 
-    public function inserirImagem($data) {
-        $this->load->model('ItemModel');
-        $this->load->model('ProdutoModel');
-        $this->load->model('CategoriaModel');
-
-        // Caminho de onde a imagem ficará
-        $nomeProdutoItem = $this->ProdutoModel->getEspecificProduto($data['id_produto'])->row('nome');
-        $idCategoriaItem = $this->ProdutoModel->getEspecificProduto($data['id_produto'])->row('id_categoria');
-        $nomeCategoriaItem = $this->CategoriaModel->getEspecificCategoria($idCategoriaItem)->row('nome');
-
-        $pastaItem = "img/portfolio/" . $nomeCategoriaItem . "/" . $nomeProdutoItem . "/" . $nomeItem;
-
-        mkdir($pastaItem);
-
-        $pastaItem = $pastaItem . "/";
-
-        //Configurações da imagem
-        $config['upload_path'] = $pastaItem;
-        $config['allowed_types'] = 'gif|jpg|jpeg|png';
-        $config['max_size'] = '3000';
-        $config['max_width'] = '285';
-        $config['max_height'] = '380';
-
-        $this->load->library('upload', $config);
-
-        if (!$this->upload->do_upload()) {
-            header('Location:' . base_url() . 'index.php/item?error=' . urlencode("Bugou! :/ Imagem inválida" . "<br>" . $this->upload->display_errors()));
-            exit();
-        } else {
-            $this->upload->data();
-            $this->ItemModel->setItem($data);
-            $idItem = $this->ItemModel->getEspecificItem();
-            /*
-             * Função inacabada !!!!
-             */
-        }
-    }
-
     public function cadastrarItem() {
         $this->load->model('ItemModel');
         $this->load->model('ProdutoModel');
@@ -78,39 +40,120 @@ class Item extends CI_Controller {
         $data['status'] = $this->input->post('statusItem');
         $data['data_criacao'] = date('Y-m-d H:i');
 
-        $this->inserirImagem($data);
+        $arquivos = $_FILES["filename"];
+        $quantidadeDeImagens = count($arquivos["name"]);
+
+        $this->ItemModel->setItem($data);
+        $this->inserirImagem($data, $quantidadeDeImagens, $arquivos);
     }
 
-    public function deletarPastaProdutosPorCategoria($idCategoria) {
-        //Chama model responsavel pela persistencia
-        $this->load->model("CategoriaModel");
-        $this->load->model("ProdutoModel");
+    private function inserirImagem($data, $quantidadeDeImagens, $arquivos) {
+        $this->load->helper('url');
+        $this->load->model('ItemModel');
+        $this->load->model('ProdutoModel');
+        $this->load->model('CategoriaModel');
 
-        $nomeAntigoPasta = $this->CategoriaModel->getEspecificCategoria($idCategoria)->row("nome");
-        $nomePastaProdutos = $this->ProdutoModel->getProdutoPorCategoria($idCategoria);
+        // Caminho de onde a imagem ficará
+        $idItem = $this->ItemModel->getUltimoItem()->row('id');
+        $pastaItem = $this->criarPastaDoItemERetornaCaminhoDaPasta($idItem, $data['id_produto']);
 
-        if ($nomePastaProdutos->num_rows()) {
-            foreach ($nomePastaProdutos->result() as $path) {
-                rmdir("img/portfolio/" . $nomeAntigoPasta . "/" . $path->nome);
+        for ($i = 0; $i < $quantidadeDeImagens; $i++) {
+
+            // Aplica as configurações do arquivo
+            $_FILES['userfile']['name'] = $arquivos['name'][$i];
+            $_FILES['userfile']['type'] = $arquivos['type'][$i];
+            $_FILES['userfile']['tmp_name'] = $arquivos['tmp_name'][$i];
+            $_FILES['userfile']['error'] = $arquivos['error'][$i];
+            $_FILES['userfile']['size'] = $arquivos['size'][$i];
+
+            //Configurações da imagem
+            $config['upload_path'] = $pastaItem;
+            $config['allowed_types'] = 'gif|jpg|jpeg|png';
+            $config['max_size'] = '3000';
+            $config['max_width'] = '10000';
+            $config['max_height'] = '38000';
+
+
+            $this->load->library('upload', $config);
+
+            // Realiza o upload do arquivo
+            if (!$this->upload->do_upload()) {
+                header('Location:' . base_url() . 'index.php/item?error=' . urlencode("Bugou! :/ Imagem inválida" . "<br>" . $this->upload->display_errors()));
+                exit();
+            } else {
+
+                // Realiza o upload do arquivo
+                $this->upload->data();
+
+                $data = array('upload_data' => $this->upload->data());
+                $this->persisteImagemNoBancoDeDados($data, $idItem, $pastaItem);
             }
         }
+        header('Location:' . base_url() . 'index.php/item?succsses=' . urlencode('Cadastro Realizado com sucesso!'));
     }
 
-    public function deletarArquivosItensPorProduto($idCategoria, $idProduto) {
-        //Chama model responsavel pela persistencia
-        $this->load->model("CategoriaModel");
-        $this->load->model("ProdutoModel");
-        $this->load->model("ItemModel");
-        $this->load->model("ImagemItemModel");
+    private function persisteImagemNoBancoDeDados($data, $idItem, $pastaItem) {
+        foreach ($data as $item) {
 
-        $nomePastaCategoria = $this->CategoriaModel->getEspecificCategoria($idCategoria)->row("nome");
-        $nomePastaProduto = $this->ProdutoModel->getEspecificProduto($idProduto)->row("nome");
-        $idItem = $this->ItemModel->getItemPorProduto($idProduto);
-        $nomeImagensItem = $this->ImagemItemModel->getImagemPorItem($idItem->row('id'));
+            // Persiste a imagem na tabela "imagem_item"
+            $nomeDaImagemDoItem = md5(uniqid(time())) . "" . $item['file_ext'];
+            $this->cadastraImagemItem($nomeDaImagemDoItem, $idItem);
 
-        foreach ($nomeImagensItem->result() as $file) {
-            unlink("img/portfolio/" . $nomePastaCategoria . "/" . $nomePastaProduto . "/" . $file->nome);
+            rename($pastaItem . "" . $item['file_name'], $pastaItem . $nomeDaImagemDoItem);
         }
+    }
+
+    private function cadastraImagemItem($nomeDaImagemDoItem, $idItem) {
+        $this->load->model('ItemModel');
+
+        //Define a zona para captura da data
+        date_default_timezone_set('America/Sao_Paulo');
+
+        $data['id_item'] = $idItem;
+        $data['nome'] = $nomeDaImagemDoItem;
+        $data['data_insercao'] = date('Y-m-d H:i');
+
+        $this->ItemModel->setImagensItem($data);
+    }
+
+    private function criarPastaDoItemERetornaCaminhoDaPasta($idItem, $id_produto) {
+        $this->load->model('ItemModel');
+        $this->load->model('ProdutoModel');
+        $this->load->model('CategoriaModel');
+
+        // Caminho de onde a imagem ficará
+        $nomeProdutoItem = $this->ProdutoModel->getEspecificProduto($id_produto)->row('nome');
+        $idCategoriaItem = $this->ProdutoModel->getEspecificProduto($id_produto)->row('id_categoria');
+        $nomeCategoriaItem = $this->CategoriaModel->getEspecificCategoria($idCategoriaItem)->row('nome');
+
+        $pastaItem = "img/portfolio/" . $nomeCategoriaItem . "/" . $nomeProdutoItem . "/" . $idItem;
+
+        if (!is_dir($pastaItem)) {
+            mkdir($pastaItem);
+        }
+
+        return $pastaItem .= "/";
+    }
+
+    public function excluirItem() {
+        $this->load->model("ItemModel");
+        $idItem = $this->input->post("idItem");
+        $idDoProdutoDoItem = $this->ItemModel->getEspecificItem($idItem)->row("id_produto");
+
+        $this->ItemModel->deleteImagensItem($idItem);
+        $this->ItemModel->deleteItem($idItem);
+
+        $diretorio = $this->criarPastaDoItemERetornaCaminhoDaPasta($idItem, $idDoProdutoDoItem);
+
+        $this->delTree($diretorio);
+    }
+
+    private static function delTree($dir) {
+        $files = array_diff(scandir($dir), array('.', '..'));
+        foreach ($files as $file) {
+            (is_dir("$dir/$file")) ? Categoria::delTree("$dir/$file") : unlink("$dir/$file");
+        }
+        return rmdir($dir);
     }
 
     private function removeAscento($string) {

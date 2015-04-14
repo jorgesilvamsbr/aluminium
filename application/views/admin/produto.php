@@ -63,7 +63,7 @@
                                     <!-- /.panel-heading -->
                                     <div class="panel-body">
                                         <div class="table-responsive">
-                                            <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                                            <table class="table table-striped table-bordered table-hover" id="dataTablesIDCategoria">
                                                 <thead>
                                                     <tr>
                                                         <th>Id</th>
@@ -72,11 +72,10 @@
                                                         <th>Status</th>
                                                         <th>Data de Registro</th>
                                                         <th>Última Modificação</th>
-                                                        <!--<th>Editar</th>-->
-                                                        <!--<th>Excluir</th>-->
+                                                        <th></th>
+                                                        <th></th>
                                                     </tr>
                                                 </thead>
-                                                <tbody>
                                                     <?php
                                                     foreach ($produto->result() as $produto) {
 
@@ -94,12 +93,11 @@
                                                         "<td data-status='".$produto->status."'>" . ($produto->status == 1 ? 'Ativo' : 'Inativo') . "</td>" .
                                                         "<td>" . $produto->data_criacao . "</td>" .
                                                         "<td>" . $produto->data_modificacao . "</td>" .
-                                                        "<td><button class='btn-info'>Editar</button>" .
-                                                        "<td><button class='btn-danger'>Excluir</button>" .
+                                                        "<td><button class='btn-info'>Editar</button></td>" .
+                                                        "<td><button class='btn-danger'>Excluir</button></td>" .
                                                         "</tr>";
                                                     }
                                                     ?>
-                                                </tbody>
                                             </table>
                                         </div>
                                         <!-- /.table-responsive -->

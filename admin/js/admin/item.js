@@ -51,16 +51,16 @@ $(function () {
 
             $.ajax({
                 type: "post",
-                data: {idCategoria: id},
+                data: {idItem: id},
                 url: url,
                 success: function () {
-
+                    
                     $('html,body').animate({scrollTop: 0}, 'fast');
                     window.location.href = window.location.href;
 
                 },
                 error: function () {
-                    alert("erro");
+                    alert("Calma calma não criemos pânico!\nNossos minions ja estão trabalhando na solução do problema.");
                 }
             });
 
