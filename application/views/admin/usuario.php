@@ -1,9 +1,9 @@
-<script type="text/javascript" src="<?php echo base_url(); ?>admin/js/admin/categoria.js" ></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>admin/js/admin/usuario.js" ></script>
 
 <div id="page-wrapper">
     <div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header">Categoria</h1>
+            <h1 class="page-header">Cadastro de Usuários</h1>
         </div>
         <!-- /.col-lg-12 -->
     </div>
@@ -12,30 +12,30 @@
         <div class="col-lg-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    Insira uma nova categoria
+                    Cadastrar usuário
                 </div>
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-lg-6">
                             <?php
                             $attributes = array('id' => 'formCadastro');
-                            echo form_open("categoria/cadastrarCategoria", $attributes);
+                            echo form_open("usuario/salvarUsuario", $attributes);
                             ?>
                             <div class="form-group">
-                                <input class="form-control" id="url" value="<?php echo base_url() . "index.php/categoria/excluirCategoria"; ?>" type="hidden">
-                                <input class="form-control" id="idCategoria" value="-1" type="hidden">
+                                <input class="form-control" id="url" value="<?php echo base_url() . "index.php/usuario/excluirUsuario"; ?>" type="hidden">
+                                <input class="form-control" name="idUsuario" id="idUsuario" value="-1" type="hidden">
 
-                                <label>Nome Categoria</label>
-                                <input class="form-control" id="nomeCategoria" name="nomeCategoria">
-                                <p class="help-block">Examplo: Sala, Cozinha, etc.</p>
+                                <label>Nome do usuário</label>
+                                <input class="form-control" type="text" id="nome" name="nome" />
+                                <label>Login</label>
+                                <input class="form-control" type="text" id="login" name="login" />
+                                <label>Senha</label>
+                                <input class="form-control" type="password" id="senha" name="senha" />
+                                <label>Confirme a senha</label>
+                                <input class="form-control" type="password" id="contraSenha" name="contraSenha" />
 
-                                <label>Status</label>
-                                <select class="form-control" name="statusCategoria" id="statusCategoria">
-                                    <option value="1">Ativo</option>
-                                    <option value="0">Inativo</option>
-                                </select>
                             </div>
-                            <input type="button" id="botao" class="btn btn-default" value="Cadastrar" />
+                            <input type="button" id="botao" name="botao" class="btn btn-default" value="Cadastrar" />
                             <button type="reset" class="btn btn-default">Limpar</button>
                             <?php echo form_close(); ?>
                         </div>
@@ -62,28 +62,28 @@
                                                     <tr>
                                                         <th>Id</th>
                                                         <th>Nome</th>
-                                                        <th>Status</th>
-                                                        <th>Data de Registro</th>
-                                                        <th>Última Modificação</th>
+                                                        <th>Login</th>
+                                                        <th>Último Login</th>
                                                         <th></th>
                                                         <th></th>
                                                     </tr>
                                                 </thead>
-                                                <!--<tbody>-->  
-                                                <?php
-                                                foreach ($query->result() as $categoria) {
-                                                    echo "<tr class = 'odd gradeX'>" .
-                                                    "<td data-id='" . $categoria->id . "'>" . $categoria->id . "</td>" .
-                                                    "<td data-nome='" . $categoria->nome . "'>" . $categoria->nome . "</td>" .
-                                                    "<td data-status='" . $categoria->status . "'>" . ($categoria->status == 1 ? 'Ativo' : 'Inativo') . "</td>" .
-                                                    "<td>" . $categoria->data_criacao . "</td>" .
-                                                    "<td>" . $categoria->data_modificacao . "</td>" .
-                                                    "<td><button class='btn-info'>Editar</button></td>" .
-                                                    "<td><button class='btn-danger'>Excluir</button></td>" .
-                                                    "</tr>";
-                                                }
-                                                ?>
-                                                <!--</tbody>-->
+                                                <tbody>
+                                                    
+                                                        <?php
+                                                        foreach ($usuario->result() as $usuario) {
+                                                            echo "<tr class='odd gradeX'>" .
+                                                            "<td data-id='" . $usuario->id . "'>" . $usuario->id . "</td>" .
+                                                            "<td data-nome='" . $usuario->nome . "'>" . $usuario->nome . "</td>" .
+                                                            "<td data-login='" . $usuario->login . "'>" . $usuario->login . "</td>" .
+                                                            "<td>" . $usuario->data_ultimo_acesso . "</td>" .
+                                                            "<td><button class='btn-info'>Editar</button></td>" .
+                                                            "<td><button class='btn-danger'>Excluir</button></td>" .
+                                                            "</tr>";
+                                                        }
+                                                        ?>
+                                                    
+                                                </tbody>
                                             </table>
 
                                         </div>

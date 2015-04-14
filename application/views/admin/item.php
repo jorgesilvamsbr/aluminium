@@ -34,7 +34,7 @@
                                 </select>
                                 <br/>
 
-                                <label>Nome Categoria</label>
+                                <label>Nome Item</label>
                                 <input class="form-control" id="nomeItem" name="nomeItem">
                                 <p class="help-block">Examplo: Sala, Cozinha, etc.</p>
 
@@ -52,7 +52,7 @@
                             <div class="col-lg-5 form-group">
 
                                 <label>Selecione as imagens</label>
-                                <input type="file" multiple class="form-control" id="filename" name="filename[]">
+                                <input type="file" class="form-control" id="filename" name="filename[]" multiple>
                                 <p class="help-block">Somente imagens: jpeg, png.</p>
 
                                 <input type="button" id="botao" class="btn btn-default" value="Cadastrar" />
@@ -81,37 +81,30 @@
                                             <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                                                 <thead>
                                                     <tr>
-                                                        <th>Id do Item</th>
                                                         <th>Id Produto</th>
-                                                        <th>Nome</th>
+                                                        <th>Id do Item</th>
+                                                        <th>Nome do Item</th>
                                                         <th>Status</th>
                                                         <th>Data de Registro</th>
                                                         <th>Última Modificação</th>
-                                                        <!--<th>Editar</th>-->
-                                                        <!--<th>Excluir</th>-->
+                                                        <th></th>
+                                                        <th></th>
                                                     </tr>
                                                 </thead>
                                                 <!--<tbody>-->  
                                                 <?php
                                                 foreach ($item->result() as $item) {
                                                     echo "<tr class = 'odd gradeX'>" .
-                                                    "<td data-id='" . $item->id . "'>" . $item->id . "</td>" .
                                                     "<td>" . $item->id_produto . "</td>" .
+                                                    "<td data-id='" . $item->id . "'>" . $item->id . "</td>" .
                                                     "<td data-nome='" . $item->nome . "'>" . $item->nome . "</td>" .
                                                     "<td>" . ($item->status == 1 ? 'Ativo' : 'Inativo') . "</td>" .
                                                     "<td>" . $item->data_criacao . "</td>" .
                                                     "<td>" . $item->data_modificacao . "</td>" .
-                                                    "<td><button class='btn-info'>Editar</button>" .
-                                                    "<td><button class='btn-danger'>Excluir</button>" .
+                                                    "<td><button class='btn-info'>Editar</button></td>" .
+                                                    "<td><button class='btn-danger'>Excluir</button></td>" .
                                                     "</tr>";
                                                 }
-//                                                    <tr class = "even gradeC">
-//                                                    <td>Trident</td>
-//                                                    <td>Internet Explorer 5.0</td>
-//                                                    <td>Win 95+</td>
-//                                                    <td class = "center">5</td>
-//                                                    <td class = "center">C</td>
-//                                                    </tr>
                                                 ?>
                                                 <!--</tbody>-->
                                             </table>

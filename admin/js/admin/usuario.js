@@ -9,12 +9,17 @@ $(document).ready(function () {
                 cont++;
             }
         });
-        if (cont === 0)
-        {
-            $("#formCadastro").submit();
+        if ($("#senha").val() === $("#contraSenha").val()) {
+            if (cont === 0)
+            {
+                $("#formCadastro").submit();
+            } else {
+                alert("Preencha os campos em vermelho!");
+            }
         } else {
-            alert("Preencha os campos em vermelho!");
+            alert("As senhas não conferem!");
         }
+
     });
 
 });
@@ -25,12 +30,12 @@ $(function () {
         e.preventDefault;
         var id = $(this).closest('tr').find('td[data-id]').data('id');
         var nome = $(this).closest('tr').find('td[data-nome]').data('nome');
-        var status = $(this).closest('tr').find('td[data-status]').data('status');
+        var login = $(this).closest('tr').find('td[data-login]').data('login');
 
-        $(this).val($("#idCategoria").val(id));
-        $(this).val($("#nomeCategoria").val(nome));
-        $("#statusCategoria option[value='" + status + "']").attr("selected", true);
-        $("#formCadastro").attr("action", "../index.php/categoria/editarCategoria");
+        $(this).val($("#idUsuario").val(id));
+        $(this).val($("#nome").val(nome));
+        $(this).val($("#login").val(login));
+        $("#formCadastro").attr("action", "../index.php/usuario/editarUsuario");
         $('html,body').animate({scrollTop: 0}, 'fast');
     });
 });
@@ -49,10 +54,10 @@ $(function () {
 
             $.ajax({
                 type: "post",
-                data: {idCategoria: id},
+                data: {idUsuario: id},
                 url: url,
                 success: function () {
-                    
+
                     $('html,body').animate({scrollTop: 0}, 'fast');
                     window.location.href = window.location.href;
 
