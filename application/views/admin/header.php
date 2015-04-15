@@ -60,7 +60,7 @@
                         </a>
                         <ul class="dropdown-menu dropdown-user">
                             <li class="divider"></li>
-                            <li><a href="#"><i class="fa fa-sign-out fa-fw"></i> Sair</a>
+                            <li><a href="<?php echo base_url(); ?>index.php/admin/sair"><i class="fa fa-sign-out fa-fw"></i> Sair</a>
                             </li>
                         </ul>
                         <!-- /.dropdown-user -->

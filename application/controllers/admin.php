@@ -23,9 +23,9 @@ class Admin extends CI_Controller {
                 'username' => $data['login'],
                 'logged' => true
             );
-            
+
             $this->session->set_userdata($dadosDeSessao);
-            
+
             redirect(base_url() . 'index.php/categoria');
         } else {
             redirect(base_url() . 'index.php/admin');
@@ -46,6 +46,12 @@ class Admin extends CI_Controller {
 
         // Gera um hash baseado em bcrypt
         return crypt($senha, '$2a$' . $custo . '$' . $salt);
+    }
+
+    public function sair() {
+        $this->load->helper('url');
+        $this->session->sess_destroy();
+        redirect(base_url() . 'index.php/admin');
     }
 
 }
