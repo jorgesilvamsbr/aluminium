@@ -14,7 +14,7 @@
 | path to your installation.
 |
 */
-$config['base_url']	= 'http://localhost/aluminium/';
+$config['base_url']	= 'http://localhost/projects/aluminium/';
 
 /*
 |--------------------------------------------------------------------------
@@ -224,7 +224,7 @@ $config['cache_path'] = '';
 | MUST set an encryption key.  See the user guide for info.
 |
 */
-$config['encryption_key'] = '';
+$config['encryption_key'] = 'ZgHFyY7p0u8NAWpFEiRs';
 
 /*
 |--------------------------------------------------------------------------

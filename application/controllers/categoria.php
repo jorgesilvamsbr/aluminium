@@ -4,6 +4,8 @@ class Categoria extends CI_Controller {
 
     public function __construct() {
         parent::__construct();
+        $this->load->model('usuarioModel');
+        $this->usuarioModel->logged();
     }
 
     public function index() {
@@ -90,8 +92,8 @@ class Categoria extends CI_Controller {
         $produtosDaCategoria = $this->ProdutoModel->getProdutoPorCategoria($idCategoria);
 
         foreach ($produtosDaCategoria->result() as $produtos) {
-            $this->excluiItensPertecentesAoProduto( $produtos->id );
-            $this->ProdutoModel->deleteProduto( $produtos->id );
+            $this->excluiItensPertecentesAoProduto($produtos->id);
+            $this->ProdutoModel->deleteProduto($produtos->id);
         }
     }
 

@@ -4,6 +4,8 @@ class Produto extends CI_Controller {
 
     public function __construct() {
         parent::__construct();
+        $this->load->model('usuarioModel');
+        $this->usuarioModel->logged();
     }
 
     public function index() {
@@ -71,7 +73,7 @@ class Produto extends CI_Controller {
         $caminhodaPasta = $this->reuperaOrigemEDestinoDaNovaPastaDoProduto($idProduto, $data["id_categoria"]);
         $this->copiaArquivosEPastas($caminhodaPasta["origem"], $caminhodaPasta["destino"]);
         $this->delTree($caminhodaPasta["origem"]);
-        
+
         // Persiste
         $this->ProdutoModel->updateProduto($idProduto, $data);
 
@@ -148,8 +150,8 @@ class Produto extends CI_Controller {
         return true;
     }
 
-    private function reuperaOrigemEDestinoDaNovaPastaDoProduto($idProduto, $idDaNovaCategoria){
-            //Chama model responsavel pela persistencia
+    private function reuperaOrigemEDestinoDaNovaPastaDoProduto($idProduto, $idDaNovaCategoria) {
+        //Chama model responsavel pela persistencia
         $this->load->model("ProdutoModel");
         $this->load->model("CategoriaModel");
 
@@ -158,13 +160,13 @@ class Produto extends CI_Controller {
         $nomeAntigoDaPastaCategoria = $this->CategoriaModel->getEspecificCategoria($idDaPastaCategoria)->row("nome");
         $nomeDaNovaPastaCategoria = $this->CategoriaModel->getEspecificCategoria($idDaNovaCategoria)->row("nome");
         $nomeDaPastaProduto = $this->ProdutoModel->getEspecificProduto($idProduto)->row("nome");
-        
-        $origem = "img/portfolio/" . $nomeAntigoDaPastaCategoria . "/". $nomeDaPastaProduto;
-        $destino = "img/portfolio/" . $nomeDaNovaPastaCategoria . "/". $nomeDaPastaProduto;
-        
+
+        $origem = "img/portfolio/" . $nomeAntigoDaPastaCategoria . "/" . $nomeDaPastaProduto;
+        $destino = "img/portfolio/" . $nomeDaNovaPastaCategoria . "/" . $nomeDaPastaProduto;
+
         return array("origem" => $origem, "destino" => $destino);
     }
-    
+
     private function renomeiaPastaProduto($idProduto, $novoNomeDoProduto) {
         //Chama model responsavel pela persistencia
         $this->load->model("ProdutoModel");
@@ -178,7 +180,6 @@ class Produto extends CI_Controller {
         if ($nomeAntigoDaPastaProduto != $novoNomeDoProduto) {
             rename("img/portfolio/" . $nomeDaPastaCategoria . "/" . $nomeAntigoDaPastaProduto, "img/portfolio/" . $nomeDaPastaCategoria . "/" . $novoNomeDoProduto);
         }
-        
     }
 
     private function removeAscento($string) {

@@ -4,13 +4,15 @@ class Sobre extends CI_Controller {
 
     public function __construct() {
         parent::__construct();
+        $this->load->model('usuarioModel');
+        $this->usuarioModel->logged();
     }
 
     public function index() {
         $this->load->model("sobreModel");
-        
+
         $data['sobre'] = $this->sobreModel->getSobre();
-        
+
         $this->load->helper('url');
         $this->load->helper('form');
 
@@ -31,4 +33,5 @@ class Sobre extends CI_Controller {
 
         header('Location:' . base_url() . 'index.php/sobre');
     }
+
 }

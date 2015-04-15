@@ -4,6 +4,8 @@ class Item extends CI_Controller {
 
     public function __construct() {
         parent::__construct();
+        $this->load->model('usuarioModel');
+        $this->usuarioModel->logged();
     }
 
     public function index() {

@@ -4,6 +4,8 @@ class Usuario extends CI_Controller {
 
     public function __construct() {
         parent::__construct();
+        $this->load->model('usuarioModel');
+        $this->usuarioModel->logged();
     }
 
     public function index() {
@@ -56,7 +58,8 @@ class Usuario extends CI_Controller {
     private function obterValoresDosCampos() {
         $data["nome"] = $this->input->post("nome");
         $data["login"] = $this->input->post("login");
-        $data["senha"] = $this->geraSenhaHash($this->input->post("senha"));
+        $data["senha"] = $this->input->post("senha");
+//        $data["senha"] = $this->geraSenhaHash($this->input->post("senha"));
         
         return $data;
     }
@@ -66,7 +69,7 @@ class Usuario extends CI_Controller {
         $salt = 'Cf1f11ePArKlBJomM0F6aJ';
 
         // Gera um hash baseado em bcrypt
-        return crypt($senha, '$2a$' . $custo . '$' . $salt . '$');
+        return crypt($senha, '$2a$' . $custo . '$' . $salt);
     }
 
 }
