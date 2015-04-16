@@ -1,10 +1,6 @@
 <div class="navbar-default sidebar" role="navigation">
     <div class="sidebar-nav navbar-collapse">
         <ul class="nav" id="side-menu">
-
-            <li>
-                <a class="active" href="<?php echo base_url() . "index.php/admin"; ?>"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
-            </li>
             <li>
                 <a href="#"><i class="fa fa-wrench fa-fw"></i> Portfólio<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
@@ -26,9 +22,9 @@
                     <li>
                         <a href="<?php echo base_url() . "index.php/sobre"; ?>">Sobre</a>
                     </li>
-                    <li>
-                        <a href="<?php echo base_url() . "index.php/contato"; ?>">Contato</a>
-                    </li>
+                    <!--<li>-->
+                        <!--<a href="<?php // echo base_url() . "index.php/contato"; ?>">Contato</a>-->
+                    <!--</li>-->
                     <li>
                         <a href="<?php echo base_url() . "index.php/usuario"; ?>">Usuário</a>
                     </li>

@@ -32,15 +32,16 @@ class Categoria extends CI_Controller {
         //Define a zona para captura da data
         date_default_timezone_set('America/Sao_Paulo');
 
-        $data['nome'] = $this->removeAscento($this->input->post("nomeCategoria"));
+        $data['nome'] = $this->input->post("nomeCategoria");
         $data['status'] = $this->input->post("statusCategoria");
         $data['data_criacao'] = date('Y-m-d H:i');
 
-        // Cria a nova pasta com o nome da categoria
-        mkdir("img/portfolio/" . $data['nome'], 0777);
-
         // Persiste
         $this->CategoriaModel->setCategoria($data);
+        $ultimaCategoria = $this->CategoriaModel->retornaUltimaCategoria();
+        
+        // Cria a nova pasta com o nome da categoria
+        mkdir("img/portfolio/" . $ultimaCategoria->row("id"), 0777);
 
         // Retorna para a página com a mensagem de sucesso
         header('Location:' . base_url() . 'index.php/categoria?sucess=' . urlencode('Cadastro realizado com sucesso!'));
@@ -54,15 +55,9 @@ class Categoria extends CI_Controller {
 
         // Preenche os campos coma s novas informações
         $idCategoria = $this->input->post("idCategoria");
-        $data['nome'] = $this->removeAscento($this->input->post("nomeCategoria"));
+        $data['nome'] = $this->input->post("nomeCategoria");
         $data['status'] = $this->input->post("statusCategoria");
-
-        // Renomeia a pasta com o novo nome da categoria
-        $nomeAntigoPasta = $this->CategoriaModel->getEspecificCategoria($idCategoria)->row("nome");
-        if ($nomeAntigoPasta != $data['nome']) {
-            rename("img/portfolio/" . $nomeAntigoPasta, "img/portfolio/" . $data['nome']);
-        }
-
+        
         // Persiste
         $this->CategoriaModel->updateCategoria($idCategoria, $data);
 
@@ -78,8 +73,8 @@ class Categoria extends CI_Controller {
         $idCategoria = $this->input->post("idCategoria");
 
         // Exclui as pastas
-        $nomeAntigoPasta = $this->CategoriaModel->getEspecificCategoria($idCategoria)->row("nome");
-        $diretorio = "img/portfolio/" . $nomeAntigoPasta;
+        $diretorio = "img/portfolio/" . $idCategoria;
+
         $this->delTree($diretorio);
 
         // Persiste
@@ -92,6 +87,7 @@ class Categoria extends CI_Controller {
         $produtosDaCategoria = $this->ProdutoModel->getProdutoPorCategoria($idCategoria);
 
         foreach ($produtosDaCategoria->result() as $produtos) {
+            echo $produtos->id;
             $this->excluiItensPertecentesAoProduto($produtos->id);
             $this->ProdutoModel->deleteProduto($produtos->id);
         }
@@ -99,7 +95,7 @@ class Categoria extends CI_Controller {
 
     public function excluiItensPertecentesAoProduto($idProduto) {
         $this->load->model("ItemModel");
-        $itensDoProduto = $this->ProdutoModel->getItemPorProduto($idProduto);
+        $itensDoProduto = $this->ItemModel->getItemPorProduto($idProduto);
 
         foreach ($itensDoProduto->result() as $itens) {
             $this->ItemModel->deleteItem($itens->id);
@@ -113,22 +109,4 @@ class Categoria extends CI_Controller {
         }
         return rmdir($dir);
     }
-
-    private function removeAscento($string) {
-        $map = array(
-            'À' => 'A', 'Á' => 'A', 'Â' => 'A', 'Ã' => 'A', 'Ä' => 'A', 'Å' => 'A',
-            'Æ' => 'A', 'Ç' => 'C', 'È' => 'E', 'É' => 'E', 'Ê' => 'E', 'Ë' => 'E',
-            'Ì' => 'I', 'Í' => 'I', 'Î' => 'I', 'Ï' => 'I', 'Ð' => 'D', 'Ñ' => 'N',
-            'Ò' => 'O', 'Ó' => 'O', 'Ô' => 'O', 'Õ' => 'O', 'Ö' => 'O', 'Ø' => 'O',
-            'Ù' => 'U', 'Ú' => 'U', 'Û' => 'U', 'Ü' => 'U', 'Ý' => 'Y', 'Ŕ' => 'R',
-            'Þ' => 's', 'ß' => 'B', 'à' => 'a', 'á' => 'a', 'â' => 'a', 'ã' => 'a',
-            'ä' => 'a', 'å' => 'a', 'æ' => 'a', 'ç' => 'c', 'è' => 'e', 'é' => 'e',
-            'ê' => 'e', 'ë' => 'e', 'ì' => 'i', 'í' => 'i', 'î' => 'i', 'ï' => 'i',
-            'ð' => 'o', 'ñ' => 'n', 'ò' => 'o', 'ó' => 'o', 'ô' => 'o', 'õ' => 'o',
-            'ö' => 'o', 'ø' => 'o', 'ù' => 'u', 'ú' => 'u', 'û' => 'u', 'ý' => 'y',
-            'þ' => 'b', 'ÿ' => 'y', 'ŕ' => 'r'
-        );
-        return strtr($string, $map); // funciona corretamente
-    }
-
 }

@@ -26,9 +26,9 @@ class Admin extends CI_Controller {
 
             $this->session->set_userdata($dadosDeSessao);
 
-            redirect(base_url() . 'index.php/categoria');
+            header('Location:' . base_url() . 'index.php/categoria');
         } else {
-            redirect(base_url() . 'index.php/admin');
+            header('Location:' . base_url() . 'index.php/admin');
         }
     }
 

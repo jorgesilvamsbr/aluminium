@@ -57,8 +57,13 @@ class Item extends CI_Controller {
 
         // Caminho de onde a imagem ficará
         $idItem = $this->ItemModel->getUltimoItem()->row('id');
-        $pastaItem = $this->criarPastaDoItemERetornaCaminhoDaPasta($idItem, $data['id_produto']);
-
+        $idCategoria = $this->ProdutoModel->getEspecificProduto($data['id_produto'])->row('id_categoria');
+        $pastaItem = "img/portfolio/" . $idCategoria . "/" . $data['id_produto'] . "/" . $idItem;
+        
+        mkdir($pastaItem);
+        
+        $pastaItem .= "/";
+                
         for ($i = 0; $i < $quantidadeDeImagens; $i++) {
 
             // Aplica as configurações do arquivo
@@ -91,12 +96,11 @@ class Item extends CI_Controller {
                 $this->persisteImagemNoBancoDeDados($data, $idItem, $pastaItem);
             }
         }
-        header('Location:' . base_url() . 'index.php/item?succsses=' . urlencode('Cadastro Realizado com sucesso!'));
+        header('Location:' . base_url() . 'index.php/item');
     }
 
     private function persisteImagemNoBancoDeDados($data, $idItem, $pastaItem) {
         foreach ($data as $item) {
-
             // Persiste a imagem na tabela "imagem_item"
             $nomeDaImagemDoItem = md5(uniqid(time())) . "" . $item['file_ext'];
             $this->cadastraImagemItem($nomeDaImagemDoItem, $idItem);
@@ -118,34 +122,18 @@ class Item extends CI_Controller {
         $this->ItemModel->setImagensItem($data);
     }
 
-    private function criarPastaDoItemERetornaCaminhoDaPasta($idItem, $id_produto) {
-        $this->load->model('ItemModel');
-        $this->load->model('ProdutoModel');
-        $this->load->model('CategoriaModel');
-
-        // Caminho de onde a imagem ficará
-        $nomeProdutoItem = $this->ProdutoModel->getEspecificProduto($id_produto)->row('nome');
-        $idCategoriaItem = $this->ProdutoModel->getEspecificProduto($id_produto)->row('id_categoria');
-        $nomeCategoriaItem = $this->CategoriaModel->getEspecificCategoria($idCategoriaItem)->row('nome');
-
-        $pastaItem = "img/portfolio/" . $nomeCategoriaItem . "/" . $nomeProdutoItem . "/" . $idItem;
-
-        if (!is_dir($pastaItem)) {
-            mkdir($pastaItem);
-        }
-
-        return $pastaItem .= "/";
-    }
-
     public function excluirItem() {
         $this->load->model("ItemModel");
+        $this->load->model("ProdutoModel");
+        
         $idItem = $this->input->post("idItem");
         $idDoProdutoDoItem = $this->ItemModel->getEspecificItem($idItem)->row("id_produto");
+        $idDaCategoriaDoItem = $this->ProdutoModel->getEspecificProduto($idDoProdutoDoItem)->row("id_categoria");
 
         $this->ItemModel->deleteImagensItem($idItem);
         $this->ItemModel->deleteItem($idItem);
 
-        $diretorio = $this->criarPastaDoItemERetornaCaminhoDaPasta($idItem, $idDoProdutoDoItem);
+        $diretorio = "img/portfolio/" . $idDaCategoriaDoItem . "/" . $idDoProdutoDoItem . "/" . $idItem;
 
         $this->delTree($diretorio);
     }
@@ -157,22 +145,4 @@ class Item extends CI_Controller {
         }
         return rmdir($dir);
     }
-
-    private function removeAscento($string) {
-        $map = array(
-            'À' => 'A', 'Á' => 'A', 'Â' => 'A', 'Ã' => 'A', 'Ä' => 'A', 'Å' => 'A',
-            'Æ' => 'A', 'Ç' => 'C', 'È' => 'E', 'É' => 'E', 'Ê' => 'E', 'Ë' => 'E',
-            'Ì' => 'I', 'Í' => 'I', 'Î' => 'I', 'Ï' => 'I', 'Ð' => 'D', 'Ñ' => 'N',
-            'Ò' => 'O', 'Ó' => 'O', 'Ô' => 'O', 'Õ' => 'O', 'Ö' => 'O', 'Ø' => 'O',
-            'Ù' => 'U', 'Ú' => 'U', 'Û' => 'U', 'Ü' => 'U', 'Ý' => 'Y', 'Ŕ' => 'R',
-            'Þ' => 's', 'ß' => 'B', 'à' => 'a', 'á' => 'a', 'â' => 'a', 'ã' => 'a',
-            'ä' => 'a', 'å' => 'a', 'æ' => 'a', 'ç' => 'c', 'è' => 'e', 'é' => 'e',
-            'ê' => 'e', 'ë' => 'e', 'ì' => 'i', 'í' => 'i', 'î' => 'i', 'ï' => 'i',
-            'ð' => 'o', 'ñ' => 'n', 'ò' => 'o', 'ó' => 'o', 'ô' => 'o', 'õ' => 'o',
-            'ö' => 'o', 'ø' => 'o', 'ù' => 'u', 'ú' => 'u', 'û' => 'u', 'ý' => 'y',
-            'þ' => 'b', 'ÿ' => 'y', 'ŕ' => 'r'
-        );
-        return strtr($string, $map); // funciona corretamente
-    }
-
 }

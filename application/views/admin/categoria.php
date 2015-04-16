@@ -23,7 +23,7 @@
                             ?>
                             <div class="form-group">
                                 <input class="form-control" id="url" value="<?php echo base_url() . "index.php/categoria/excluirCategoria"; ?>" type="hidden">
-                                <input class="form-control" id="idCategoria" value="-1" type="hidden">
+                                <input class="form-control" id="idCategoria" name="idCategoria" value="-1" type="hidden">
 
                                 <label>Nome Categoria</label>
                                 <input class="form-control" id="nomeCategoria" name="nomeCategoria">

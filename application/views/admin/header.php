@@ -49,7 +49,16 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="<?php echo base_url(); ?>index.php/admin/admin">Olá bom dia, Jorge Silva</a>
+                    <a class="navbar-brand" href="<?php echo base_url(); ?>index.php/admin/admin">
+                        <?php
+                        //Define a zona para captura da data
+                        date_default_timezone_set('America/Sao_Paulo');
+
+                        $horaCerta = date('H:i:s');
+
+                        echo "Última atualização " . $horaCerta;
+                        ?>
+                    </a>
                 </div>
                 <!-- /.navbar-header -->
 
