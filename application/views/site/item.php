@@ -31,7 +31,7 @@
                    echo "<div class='col-sm-6'>";
                    echo "<div class='portfolio-item'>";
                    echo "<div class='portfolio-image'>";
-                   echo "<a href='#'><img id='zoom_0" . $counter . "' src='" . base_url() . "img/" . $id_categoria . "/" . $id_produto . "/" . $item->id . "/" . $img->nome . "' data-zoom-image='" . base_url() . "img/" . $id_categoria . "/" . $id_produto . "/" . $item->id . "/" . $img->nome . "' alt='Project Name'></a>";
+                   echo "<a href='#'><img id='zoom_0" . $counter . "' src='" . base_url() . "img/portfolio/" . $id_categoria . "/" . $id_produto . "/" . $item->id . "/" . $img->nome . "' data-zoom-image='" . base_url() . "img/portfolio/" . $id_categoria . "/" . $id_produto . "/" . $item->id . "/" . $img->nome . "' alt='Project Name'></a>";
                    echo "</div>";
                    echo "</div>";
                    echo "</div>";
@@ -58,7 +58,7 @@
                    echo "<div class='col-md-4 col-sm-6'>";
                    echo "<div class='portfolio-item'>";
                    echo "<div class='portfolio-image'>";
-                   echo "<a href='#'><img id='zoom_0" . $counter . "' src='" . base_url() . "img/" . $id_categoria . "/" . $id_produto . "/" . $item->id . "/" . $img->nome . "' data-zoom-image='" . base_url() . "img/" . $id_categoria . "/" . $id_produto . "/" . $item->id . "/" . $img->nome . "' alt='Project Name'></a>";
+                   echo "<a href='#'><img id='zoom_0" . $counter . "' src='" . base_url() . "img/portfolio/" . $id_categoria . "/" . $id_produto . "/" . $item->id . "/" . $img->nome . "' data-zoom-image='" . base_url() . "img/portfolio/" . $id_categoria . "/" . $id_produto . "/" . $item->id . "/" . $img->nome . "' alt='Project Name'></a>";
 //                   echo "<a href='#'><img src='" . base_url() . "img/" . $id_categoria . "/" . $id_produto . "/" . $item->id . "/" . $img->nome . "' alt='Project Name'></a>";
                    echo "</div>";
                    echo "<div class='portfolio-info-fade'>";

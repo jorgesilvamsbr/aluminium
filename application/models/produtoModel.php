@@ -41,4 +41,10 @@ class ProdutoModel extends CI_Model {
         $this->db->where("id_categoria", $idCategoria);
         return $this->db->get('produto');
     }
+    
+    public function retornaUltimoProduto(){
+        $this->load->database();
+        $this->db->select_max("id");
+        return $this->db->get("produto");
+    }
 }

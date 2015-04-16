@@ -41,7 +41,7 @@ class Item extends CI_Controller {
         $data['descricao'] = $this->input->post('descricaoItem');
         $data['status'] = $this->input->post('statusItem');
         $data['data_criacao'] = date('Y-m-d H:i');
-
+        
         $arquivos = $_FILES["filename"];
         $quantidadeDeImagens = count($arquivos["name"]);
 

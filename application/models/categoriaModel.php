@@ -35,5 +35,10 @@ class CategoriaModel extends CI_Model {
         $this->db->where("id", $idCategoria);
         $this->db->delete("categoria");
     }
-
+    
+    public function retornaUltimaCategoria(){
+        $this->load->database();
+        $this->db->select_max("id");
+        return $this->db->get("categoria");
+    }
 }

@@ -98,7 +98,7 @@
                         echo "<div class='col-md-4 col-sm-6'>";
                         echo "<div class='portfolio-item'>";
                         echo "<div class='portfolio-image'>";
-                        echo "<a href='page-portfolio-item.html'><img src='" . base_url() . "img/" . $id_categoria . "/" . $id_produto . "/" . $item->id . "/" . $img_nome . "'></a>";
+                        echo "<a href='page-portfolio-item.html'><img src='" . base_url() . "img/portfolio/" . $id_categoria . "/" . $id_produto . "/" . $item->id . "/" . $img_nome . "'></a>";
                         echo "</div>";
                         echo "<div class='portfolio-info'>";
                         echo "<ul>";

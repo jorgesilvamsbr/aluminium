@@ -41,7 +41,7 @@ class UsuarioModel extends CI_Model {
         $logged = $this->session->userdata("logged");
 
         if(!$logged){
-            redirect( base_url() . 'index.php/admin');
+            header('Location:' . base_url() . 'index.php/admin');
             die();
         }
     }
