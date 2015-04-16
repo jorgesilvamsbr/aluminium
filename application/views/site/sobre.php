@@ -17,7 +17,7 @@
                 <?php 
                  foreach($sobre->result() as $sobre)
                  {
-                     echo $sobre->sobre;
+                     echo nl2br($sobre->sobre);
                  }
                 ?>
             </div>
