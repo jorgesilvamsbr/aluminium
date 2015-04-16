@@ -41,12 +41,26 @@ class Item extends CI_Controller {
         $data['descricao'] = $this->input->post('descricaoItem');
         $data['status'] = $this->input->post('statusItem');
         $data['data_criacao'] = date('Y-m-d H:i');
-        
-        $arquivos = $_FILES["filename"];
-        $quantidadeDeImagens = count($arquivos["name"]);
 
+        $count =    $this->input->post('count');
+//        echo $count;
         $this->ItemModel->setItem($data);
-        $this->inserirImagem($data, $quantidadeDeImagens, $arquivos);
+
+//        for($i = 0;
+//        $i <= $count;
+//        $i++) {
+//            $filename = "filename" . $i;
+            $arquivos = $_FILES["filename0"];
+            $quantidadeDeImagens = count($arquivos["name"]);
+//            echo $filename;
+            $this->inserirImagem($data, $quantidadeDeImagens, $arquivos);
+//        }
+//             $arquivos1 = $_FILES["filename1"];
+//            $quantidadeDeImagens1 = count($arquivos["name"]);
+////            echo $filename;
+//            $this->inserirImagem($data, $quantidadeDeImagens1, $arquivos1);
+//        header('Location:' . base_url() . 'index.php/item');
+
     }
 
     private function inserirImagem($data, $quantidadeDeImagens, $arquivos) {
@@ -60,10 +74,12 @@ class Item extends CI_Controller {
         $idCategoria = $this->ProdutoModel->getEspecificProduto($data['id_produto'])->row('id_categoria');
         $pastaItem = "img/portfolio/" . $idCategoria . "/" . $data['id_produto'] . "/" . $idItem;
         
-        mkdir($pastaItem);
-        
+        if(!file_exists ($pastaItem))
+        {
+            mkdir($pastaItem);
+        }
         $pastaItem .= "/";
-                
+
         for ($i = 0; $i < $quantidadeDeImagens; $i++) {
 
             // Aplica as configurações do arquivo
@@ -76,16 +92,16 @@ class Item extends CI_Controller {
             //Configurações da imagem
             $config['upload_path'] = $pastaItem;
             $config['allowed_types'] = 'gif|jpg|jpeg|png';
-            $config['max_size'] = '3000';
-            $config['max_width'] = '10000';
-            $config['max_height'] = '38000';
+            $config['max_size'] = '30000';
+            $config['max_width'] = '100000';
+            $config['max_height'] = '380000';
 
 
             $this->load->library('upload', $config);
 
             // Realiza o upload do arquivo
             if (!$this->upload->do_upload()) {
-                header('Location:' . base_url() . 'index.php/item?error=' . urlencode("Bugou! :/ Imagem inválida" . "<br>" . $this->upload->display_errors()));
+                header('Location:' . base_url() . 'index.php/item?error=' . urlencode("Erro! :/ Imagem inválida" . "<br>" . $this->upload->display_errors()));
                 exit();
             } else {
 
@@ -96,7 +112,7 @@ class Item extends CI_Controller {
                 $this->persisteImagemNoBancoDeDados($data, $idItem, $pastaItem);
             }
         }
-        header('Location:' . base_url() . 'index.php/item');
+//        header('Location:' . base_url() . 'index.php/item');
     }
 
     private function persisteImagemNoBancoDeDados($data, $idItem, $pastaItem) {
@@ -125,7 +141,7 @@ class Item extends CI_Controller {
     public function excluirItem() {
         $this->load->model("ItemModel");
         $this->load->model("ProdutoModel");
-        
+
         $idItem = $this->input->post("idItem");
         $idDoProdutoDoItem = $this->ItemModel->getEspecificItem($idItem)->row("id_produto");
         $idDaCategoriaDoItem = $this->ProdutoModel->getEspecificProduto($idDoProdutoDoItem)->row("id_categoria");
@@ -145,4 +161,5 @@ class Item extends CI_Controller {
         }
         return rmdir($dir);
     }
+
 }

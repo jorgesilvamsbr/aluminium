@@ -21,6 +21,7 @@
                                 $attributes = array('id' => 'formItem');
                                 echo form_open_multipart("item/cadastrarItem", $attributes);
                                 ?>
+                                <input type='hidden' id='count' name='count' value ='0'>
                                 <input class="form-control" id="idItem" value="-1" type="hidden">
                                 <input class="form-control" id="url" value="<?php echo base_url() . "index.php/item/excluirItem"; ?>" type="hidden">
 
@@ -50,11 +51,15 @@
                                 <br/>
                             </div>
                             <div class="col-lg-5 form-group">
-
                                 <label>Selecione as imagens</label>
-                                <input type="file" class="form-control" id="filename" name="filename[]" multiple>
-                                <p class="help-block">Somente imagens: jpeg, png.</p>
-
+                                <div class='form-inline'>
+                                    <input type="file" class="form-control" id="filename0" name="filename0[]" multiple>
+                                    <input type="button" id="botaoMais" onclick="maisImagens();" class="btn btn-primary" value="+ Mais" />
+                                    <p class="help-block">Somente imagens: jpeg, png.</p>
+                                    <div id='imagensUpload'>
+                                        
+                                    </div>
+                                </div>
                                 <input type="button" id="botao" class="btn btn-default" value="Cadastrar" />
                                 <button type="reset" class="btn btn-default">Limpar</button>
 

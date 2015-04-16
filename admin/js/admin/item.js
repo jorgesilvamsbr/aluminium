@@ -69,6 +69,15 @@ $(function () {
     });
 });
 
+//Função que seta id para e cria mais um campo para a inserção de imagens
+function maisImagens()
+{
+    var count = $("#count").val();
+    count++;
+    $("#count").val(count);
+    $("#imagensUpload").append(" <input type='file' class='form-control' id='filename" + 0 + "' name='filename" + 0 + "[]' multiple>");
+}
+
 $(document).ready(function () {
     $('#dataTablesIDItem').dataTable();
 });
