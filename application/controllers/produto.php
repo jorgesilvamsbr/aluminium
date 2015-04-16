@@ -48,7 +48,7 @@ class Produto extends CI_Controller {
         mkdir("img/portfolio/" . $data['id_categoria'] . "/" . $idDoProduto, 0777);
 
         // Retorna para a página com a mensagem de sucesso
-        header('Location:' . base_url() . 'index.php/produto?sucess=' . urlencode('Cadastro realizado com sucesso!'));
+        header('Location:' . base_url() . 'index.php/produto');
     }
 
     public function editarProduto() {

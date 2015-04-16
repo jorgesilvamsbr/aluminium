@@ -56,7 +56,6 @@
                                                         <th>Sobre</th>
                                                         <th>Última Modificação</th>
                                                         <th>Úsuário da Modificação</th>
-                                                        <th></th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -67,7 +66,6 @@
                                                             "<td data-sobre='" . $sobre->sobre . "'>" . $sobre->sobre . "</td>" .
                                                             "<td>" . $sobre->data_edicao . "</td>" .
                                                             "<td>" . $sobre->usuario_edicao . "</td>" .
-                                                            "<td><button class='btn-info'>Editar</button></td>" .
                                                             "</tr>";
                                                         }
                                                         ?>

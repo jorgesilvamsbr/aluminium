@@ -27,7 +27,7 @@ class Sobre extends CI_Controller {
         $this->load->model("sobreModel");
 
         $data["sobre"] = $this->input->post("sobre");
-        $data["usuario_edicao"] = "Jorge Arrumar no código depois";
+        $data["usuario_edicao"] = $this->session->userdata("username");
 
         $this->sobreModel->updateSobre($data);
 
