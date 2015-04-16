@@ -55,7 +55,7 @@
         <script src="<?php echo base_url() . 'js/bootstrap.min.js'?>"></script>
         <script src="http://cdn.leafletjs.com/leaflet-0.5.1/leaflet.js"></script>
         <script src="<?php echo base_url() . 'js/jquery.fitvids.js'?>"></script>
-        <script src="<?php echo base_url() . 'js/jquery.sequence-min.js'?>"</script>
+        <script src="<?php echo base_url() . 'js/jquery.sequence-min.js'?>"></script>
         <script src="<?php echo base_url() . 'js/jquery.bxslider.js'?>"></script>
         <script src="<?php echo base_url() . 'js/main-menu.js'?>"></script>
         <script src="<?php echo base_url() . 'js/template.js'?>"></script>
