@@ -59,7 +59,7 @@ class Item extends CI_Controller {
 //            $quantidadeDeImagens1 = count($arquivos["name"]);
 ////            echo $filename;
 //            $this->inserirImagem($data, $quantidadeDeImagens1, $arquivos1);
-//        header('Location:' . base_url() . 'index.php/item');
+        header('Location:' . base_url() . 'index.php/item');
 
     }
 

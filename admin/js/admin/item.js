@@ -75,9 +75,14 @@ function maisImagens()
     var count = $("#count").val();
     count++;
     $("#count").val(count);
-    $("#imagensUpload").append(" <input type='file' class='form-control' id='filename" + 0 + "' name='filename" + 0 + "[]' multiple>");
+    
+    $("#filename" + count).show();
+    
+//    $("#imagensUpload").append("<input type='file' class='form-control' id='filename" + count + "' name='filename0[]' multiple>");
 }
 
 $(document).ready(function () {
     $('#dataTablesIDItem').dataTable();
+    
+    $("#filename1, #filename2, #filename3").hide();
 });

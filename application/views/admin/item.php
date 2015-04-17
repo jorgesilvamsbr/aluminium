@@ -54,6 +54,9 @@
                                 <label>Selecione as imagens</label>
                                 <div class='form-inline'>
                                     <input type="file" class="form-control" id="filename0" name="filename0[]" multiple>
+                                    <input type="file" class="form-control" id="filename1" name="filename0[]" multiple>
+                                    <input type="file" class="form-control" id="filename2" name="filename0[]" multiple>
+                                    <input type="file" class="form-control" id="filename3" name="filename0[]" multiple>
                                     <input type="button" id="botaoMais" onclick="maisImagens();" class="btn btn-primary" value="+ Mais" />
                                     <p class="help-block">Somente imagens: jpeg, png.</p>
                                     <div id='imagensUpload'>
