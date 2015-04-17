@@ -14,13 +14,13 @@
                     <div class="col-footer col-md-3 col-xs-6">
                         <h3>Navegação</h3>
                         <ul class="no-list-style footer-navigate-section">
-                            <li><a href="index.html">Home</a></li>
-                            <li><a href="features.html">Sobre</a></li>
-                            <li><a href="features.html">Serviços</a></li>
+                            <li><a href="<?php echo base_url() . "index.php/site/" ; ?>">Home</a></li>
+                            <li><a href="<?php echo base_url() . "index.php/site/sobre" ; ?>">Sobre</a></li>
+<!--                            <li><a href="features.html">Serviços</a></li>
                             <li><a href="features.html">Equipe</a></li>
-                            <li><a href="features.html">Catálago</a></li>
-                            <li><a href="features.html">Produtos</a></li>
-                            <li><a href="features.html">Contato</a></li>
+                            <li><a href="features.html">Catálago</a></li>-->
+                            <!--<li><a href="features.html">Produtos</a></li>-->
+                            <li><a href="<?php echo base_url() . "index.php/site/contato" ; ?>">Contato</a></li>
                         </ul>
                     </div>
 

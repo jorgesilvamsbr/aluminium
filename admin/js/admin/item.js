@@ -76,6 +76,11 @@ function maisImagens()
     count++;
     $("#count").val(count);
     
+    if(count == 4)
+    {
+         $("#imagensUpload").append("<div style='border:1px solid #F00; text-align: center;'> <strong>Galeria já preenchida!</strong> </div>");    
+         return;
+    }
     $("#filename" + count).show();
     
 //    $("#imagensUpload").append("<input type='file' class='form-control' id='filename" + count + "' name='filename0[]' multiple>");

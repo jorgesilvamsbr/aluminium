@@ -31,7 +31,7 @@
                 <!-- Contact Form -->
                 <h3>Fale Conosco</h3>
                 <div class="contact-form-wrapper">
-                    <form class="form-horizontal" role="form">
+                    <form class="form-horizontal" role="form" action='enviaEmail'>
                         <div class="form-group">
                             <label for="Name" class="col-sm-3 control-label"><b>Nome</b></label>
                             <div class="col-sm-9">
