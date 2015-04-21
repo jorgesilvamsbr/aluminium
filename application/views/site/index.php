@@ -7,7 +7,7 @@
                         <!-- Slide Title -->
                         <h2 class="title">Novidade</h2>
                         <!-- Slide Text -->
-                        <h3 class="subtitle">VocÃª pode colocar um texto descrevendo o o produto aqui!</h3>
+                        <h3 class="subtitle">Você pode colocar um texto descrevendo o o produto aqui!</h3>
                         <!-- Slide Image -->
                         <img class="slide-img" src="<?php echo base_url() . '/img/homepage-slider/slide1.png'?>" alt="Slide 1" />
                     </li>

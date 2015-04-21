@@ -25,13 +25,16 @@
 
         <script src="<?php echo base_url() . '/js/modernizr-2.6.2-respond-1.1.0.min.js' ?>"></script>
 
-        
+        <style type="text/css">
+	        li#logowrapper {
+				position: absolute;
+				top: 8%;
+				left: 3%;
+				z-index: 9999;
+			}
+        </style>
     </head>
     <body>
-        <!--[if lt IE 7]>
-            <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
-        <![endif]-->
-
 
         <!-- Navigation & Logo-->
         <div class="mainmenu-wrapper">
@@ -39,29 +42,13 @@
                 <div class="menuextras">
                     <div class="extras">
                         <ul>
-                            <li><a href="<?php echo base_url() . "index.php/admin" ; ?>"><b>Área Administrativa</b></a></li>
+                            <li><a href="<?php echo base_url() . "index.php/admin" ; ?>"><b>�rea Administrativa</b></a></li>
                         </ul>
                     </div>
                 </div>
-                <!--                <nav id="mainmenu" class="mainmenu">
-                                    <ul>
-                                        <li class="logo-wrapper"><a href="index.html"><img src="img/logo2.png" alt="Aluminium Center"></a></li>
-                                        <li class="active"><a href="index.html">Home</a></li>
-                                        <li><a href="features.html">Sobre</a></li>
-                                        <li><a href="features.html">Serviços</a></li>
-                                        <li><a href="features.html">Equipe</a></li>
-                                        <li><a href="features.html">Catálago</a></li>
-                                        <li><a href="features.html">Produtos</a></li>
-                                        <li><a href="features.html">Contato</a></li>
-                                    </ul>
-                                    <div class="mainmenu-submenu-inner">
-                                        
-                                    </div>
-                                </nav>-->
-
                 <nav id="mainmenu" class="mainmenu">
                     <ul>
-                        <li class="logo-wrapper"><a href="index.html"><img src="<?php echo base_url() . '/img/logo2.png' ?>" alt="Multipurpose Twitter Bootstrap Template"></a></li>
+                        <li id="logowrapper" class="logo-wrapper"><img src="<?php echo base_url() . '/img/logo2.png' ?>" alt="Multipurpose Twitter Bootstrap Template"></a></li>
                         <li class="active">
                             <a href="<?php echo base_url(); ?>" >Home</a>
                         </li>

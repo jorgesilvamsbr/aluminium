@@ -2061,7 +2061,7 @@ span.color-red {
   bottom: 60%;
   z-index: 50;
 }
-#sequence > .sequence-canvas > li.animate-in {
+#sequence > .sequence-canvas > animate-in {
   background-position: 0 0;
   -webkit-transition-duration: 1.5s;
   -moz-transition-duration: 1.5s;
@@ -2364,12 +2364,20 @@ span.color-red {
 /*--------------------------------------------------------------------------
 +	Main Menu Style
 --------------------------------------------------------------------------*/
+.mainmenu li.logo-wrapper {
+	position: absolute;
+	z-index: 9999;
+	left: 3%;
+	top: 20%;
+}
+
 .mainmenu li.logo-wrapper a {
   border-right: 1px solid #E8E8E8;
   padding-left: 0;
   padding-top: 0;
   padding-bottom: 0;
 }
+
 .mainmenu-wrapper {
   background-color: #FFF;
   border-bottom: 4px solid #e74c3c;
@@ -2390,10 +2398,11 @@ span.color-red {
 .mainmenu .mainmenu-submenu-inner {
   margin: 0 auto;
 }
+
 .mainmenu > ul > li,
 .mainmenu .mainmenu-submenu-inner > li {
-  display: inline-block;
-  *display: inline;
+  	display: inline-block;
+  	*display: inline;
 }
 .mainmenu > ul > li > a,
 .mainmenu .mainmenu-submenu-inner > li > a {
@@ -2666,4 +2675,11 @@ span.color-red {
 }
 .dropdown.open a.dropdown-toggle .caret {
   border-top: 4px solid #FFF;
+}
+
+.logowrapper{
+	position:relative;
+	top: 0;
+	left: 0;
+	background: #DA1111;
 }
