@@ -42,7 +42,7 @@
                 <div class="menuextras">
                     <div class="extras">
                         <ul>
-                            <li><a href="<?php echo base_url() . "index.php/admin" ; ?>"><b>Área Administrativa</b></a></li>
+                            <li><a href="<?php echo base_url() . "index.php/admin" ; ?>"><b>Ãrea Administrativa</b></a></li>
                         </ul>
                     </div>
                 </div>
