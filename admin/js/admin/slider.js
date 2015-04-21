@@ -38,36 +38,43 @@ $(function () {
 });
 
 
+function excluirSlider(id)
+{
+    var url = $("#base_url").val();
+    url = url + "index.php/slider/excluirSlider/?id=" + id;
+    location.href=url;
+}
+
 // Captura o valor do id para a exclusão
-$(function () {
-    $(document).on('click', '.btn-danger', function (e) {
-        e.preventDefault;
-
-        var id = $(this).closest('tr').find('td[data-id]').data('id');
-        var nome = $(this).closest('tr').find('td[data-nome]').data('nome');
-        var url = $("#url").val();
-        
-        if (confirm("Tem certeza que deseja excluir o produto: " + nome + "?")) {
-
-            $.ajax({
-                type: "post",
-                data: {idItem: id},
-                url: url,
-                success: function () {
-                    
-                    $('html,body').animate({scrollTop: 0}, 'fast');
-                    window.location.href = window.location.href;
-
-                },
-                error: function () {
-                    alert("Calma calma não criemos pânico!\nNossos minions ja estão trabalhando na solução do problema.");
-                }
-            });
-
-        }
-
-    });
-});
+//$(function () {
+//    $(document).on('click', '.btn-danger', function (e) {
+//        e.preventDefault;
+//
+//        var id = $(this).closest('tr').find('td[data-id]').data('id');
+//        var nome = $(this).closest('tr').find('td[data-nome]').data('nome');
+//        var url = $("#url").val();
+//        
+//        if (confirm("Tem certeza que deseja excluir o produto: " + nome + "?")) {
+//
+//            $.ajax({
+//                type: "post",
+//                data: {idItem: id},
+//                url: url,
+//                success: function () {
+//                    
+//                    $('html,body').animate({scrollTop: 0}, 'fast');
+//                    window.location.href = window.location.href;
+//
+//                },
+//                error: function () {
+//                    alert("Calma calma não criemos pânico!\nNossos minions ja estão trabalhando na solução do problema.");
+//                }
+//            });
+//
+//        }
+//
+//    });
+//});
 
 //Função que seta id para e cria mais um campo para a inserção de imagens
 function maisImagens()

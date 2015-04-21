@@ -135,20 +135,19 @@ class Slider extends CI_Controller {
         $this->SliderModel->setSlider($data);
     }
 
-    public function excluirItem() {
-        $this->load->model("ItemModel");
-        $this->load->model("ProdutoModel");
+    public function excluirSlider() {
+        $this->load->model("SliderModel");
 
-        $idItem = $this->input->post("idItem");
-        $idDoProdutoDoItem = $this->ItemModel->getEspecificItem($idItem)->row("id_produto");
-        $idDaCategoriaDoItem = $this->ProdutoModel->getEspecificProduto($idDoProdutoDoItem)->row("id_categoria");
+        $idSlider = $this->input->get("id");
 
-        $this->ItemModel->deleteImagensItem($idItem);
-        $this->ItemModel->deleteItem($idItem);
+        $this->SliderModel->deleteSlider($idSlider);
+        
+        header('Location:' . base_url() . 'index.php/slider');
 
-        $diretorio = "img/portfolio/" . $idDaCategoriaDoItem . "/" . $idDoProdutoDoItem . "/" . $idItem;
 
-        $this->delTree($diretorio);
+//        $diretorio = "img/portfolio/" . $idDaCategoriaDoItem . "/" . $idDoProdutoDoItem . "/" . $idItem;
+
+//        $this->delTree($diretorio);
     }
 
     private static function delTree($dir) {

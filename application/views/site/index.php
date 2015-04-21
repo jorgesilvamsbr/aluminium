@@ -1,22 +1,23 @@
 <?php
 $get_url = "index.php/site/item";        
 ?>
+    <!--$( "#greatphoto" ).attr( "alt", "Beijing Brush Seller" );-->
 <!-- Homepage Slider -->
         <div class="homepage-slider">
             <div id="sequence">
                 <ul class="sequence-canvas">
                     <!-- Slide 1 -->
-                    <li class="bg1">
+                    <li style="background-image: '../img/homepage-slider/slider-bg1.jpg' !important;">
                         <!-- Slide Title -->
                         <h2 class="title">Novidade</h2>
                         <!-- Slide Text -->
-                        <h3 class="subtitle">Você pode colocar um texto descrevendo o o produto aqui!</h3>
+                        <h3 class="subtitle">VocÃª pode colocar um texto descrevendo o o produto aqui!</h3>
                         <!-- Slide Image -->
                         <img class="slide-img" src="<?php echo base_url() . '/img/homepage-slider/slide1.png'?>" alt="Slide 1" />
                     </li>
                     <!-- End Slide 1 -->
                     <!-- Slide 2 -->
-                    <li class="bg2">
+                    <li class="bg1">
                         <!-- Slide Title -->
                         <h2 class="title">Venha conferir!</h2>
                         <!-- Slide Text -->
