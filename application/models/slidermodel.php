@@ -1,15 +1,15 @@
 <?php
 
-class ImagemItemModel extends CI_Model {
+class SliderModel extends CI_Model {
 
     public function __construct() {
         parent::__construct();
     }
 
-    public function getImagemItem() {
+    public function getSlider() {
         $this->load->database();
-        $this->db->order_by("id", "asc");
-        return $this->db->get('imagem_item');
+        $this->db->order_by("id", "desc");
+        return $this->db->get('slider');
     }
 
     public function getEspecificImagemItem($idItem) {
@@ -19,9 +19,9 @@ class ImagemItemModel extends CI_Model {
         return $this->db->get('imagem');
     }
 
-    public function setImagemItem($data) {
+    public function setSlider($data) {
         $this->load->database();
-        $this->db->insert("imagem", $data);
+        $this->db->insert("slider", $data);
     }
 
     public function updateImagemItem($idItem, $data) {

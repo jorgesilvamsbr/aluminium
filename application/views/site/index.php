@@ -1,4 +1,7 @@
-        <!-- Homepage Slider -->
+<?php
+$get_url = "index.php/site/item";        
+?>
+<!-- Homepage Slider -->
         <div class="homepage-slider">
             <div id="sequence">
                 <ul class="sequence-canvas">
@@ -98,14 +101,14 @@
                         echo "<div class='col-md-4 col-sm-6'>";
                         echo "<div class='portfolio-item'>";
                         echo "<div class='portfolio-image'>";
-                        echo "<a href='page-portfolio-item.html'><img src='" . base_url() . "img/portfolio/" . $id_categoria . "/" . $id_produto . "/" . $item->id . "/" . $img_nome . "'></a>";
+                        echo "<a href='" . base_url() . $get_url . "/?id=" . $item->id ."'><img src='" . base_url() . "img/portfolio/" . $id_categoria . "/" . $id_produto . "/" . $item->id . "/" . $img_nome . "'></a>";
                         echo "</div>";
                         echo "<div class='portfolio-info'>";
                         echo "<ul>";
                         echo "<li class='portfolio-project-name'>" . $item->nome . "</li>";
                         echo "<li>" . substr($item->descricao, 0, 40) . "...</li>";
 //                        echo "<li>Cliente: Some Client LTD</li>";
-                        echo "<li class='read-more'><a href='page-portfolio-item.html' class='btn'>Leia mais</a></li>";
+                        echo "<li class='read-more'><a href='" . base_url() . $get_url . "/?id=" . $item->id ."' class='btn'>Veja mais</a></li>";
                         echo "</ul>";
                         echo "</div>";
                         echo "</div>";
@@ -122,23 +125,23 @@
         </div>
 
         <!-- Testimonials -->
-        <div class="section">
+<!--        <div class="section">
             <div class="container">
                 <h2>Clientes Satisfeitos</h2>
                 <div class="row">
-                    <!-- Testimonial -->
+                     Testimonial 
                     <div class="testimonial col-md-4 col-sm-6">
-                        <!-- Author Photo -->
+                         Author Photo 
                         <div class="author-photo">
                             <img src="img/user1.jpg" alt="Author 1">
                         </div>
                         <div class="testimonial-bubble">
                             <blockquote>
-                                <!-- Quote -->
+                                 Quote 
                                 <p class="quote">
                                     "Este texto é apenas um modelo de comentário de algum cliente feliz pelo trabalho realizado."
                                 </p>
-                                <!-- Author Info -->
+                                 Author Info 
                                 <cite class="author-info">
                                     - Alberto Silva,<br>Diretora Geral da <a href="#">Compania Ficticia</a>
                                 </cite>
@@ -146,7 +149,7 @@
                             <div class="sprite arrow-speech-bubble"></div>
                         </div>
                     </div>
-                    <!-- End Testimonial -->
+                     End Testimonial 
                     <div class="testimonial col-md-4 col-sm-6">
                         <div class="author-photo">
                             <img src="img/user5.jpg" alt="Author 2">
@@ -181,7 +184,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div>-->
         <!-- End Testimonials -->
     </body>
 </html>

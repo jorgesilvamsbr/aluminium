@@ -22,6 +22,9 @@
                     <li>
                         <a href="<?php echo base_url() . "index.php/sobre"; ?>">Sobre</a>
                     </li>
+                    <li>
+                        <a href="<?php echo base_url() . "index.php/slider"; ?>">Slider</a>
+                    </li>
                     <!--<li>-->
                         <!--<a href="<?php // echo base_url() . "index.php/contato"; ?>">Contato</a>-->
                     <!--</li>-->

@@ -50,7 +50,7 @@
                     <ul>
                         <li id="logowrapper" class="logo-wrapper"><img src="<?php echo base_url() . '/img/logo2.png' ?>" alt="Multipurpose Twitter Bootstrap Template"></a></li>
                         <li class="active">
-                            <a href="<?php echo base_url(); ?>" >Home</a>
+                            <a href="<?php echo base_url(); ?>" >Início</a>
                         </li>
                         <li>
                             <a href="<?php echo base_url() . "index.php/site/sobre" ; ?>">Sobre</a>
@@ -99,11 +99,11 @@
                                 </div><!--/mainmenu-submenu-inner -->
                             </div><!--/mainmenu-submenu -->
                         </li>
-                        <li >
-                            <a href = "credits.html">Serviços</a>
+<!--                        <li >
+                            <a href = "">Serviços</a>
                         </li>
-                        <li><a href = "features.html">Equipe</a></li>
-                        <li><a href = "features.html">Produtos</a></li>
+                        <li><a href = "">Equipe</a></li>-->
+                        <!--<li><a href = "features.html">Produtos</a></li>-->
                         <li><a href="<?php echo base_url() . "index.php/site/contato" ; ?>">Contato</a></li>
                     </ul>
                 </nav>

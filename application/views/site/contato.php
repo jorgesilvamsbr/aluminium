@@ -35,13 +35,13 @@
                         <div class="form-group">
                             <label for="Name" class="col-sm-3 control-label"><b>Nome</b></label>
                             <div class="col-sm-9">
-                                <input class="form-control" id="Name" type="text" placeholder="">
+                                <input class="form-control" id="Name" name="name" type="text" placeholder="">
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="contact-email" class="col-sm-3 control-label"><b>Email</b></label>
                             <div class="col-sm-9">
-                                <input class="form-control" id="contact-email" type="text" placeholder="">
+                                <input class="form-control" id="contact-email" name="email" type="text" placeholder="">
                             </div>
                         </div>
                         <div class="form-group">
@@ -57,7 +57,7 @@
                         <div class="form-group">
                             <label for="contact-message" class="col-sm-3 control-label"><b>Mensagem</b></label>
                             <div class="col-sm-9">
-                                <textarea class="form-control" rows="5" id="contact-message"></textarea>
+                                <textarea class="form-control" rows="5" id="contact-message" name="message"></textarea>
                             </div>
                         </div>
                         <div class="form-group">

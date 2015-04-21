@@ -75,7 +75,7 @@ class Site extends CI_Controller {
         }
 
         //pega id do produto
-        $produto = $this->produtoModel->getProduto($id_produto);
+        $produto = $this->produtoModel->getEspecificProduto($id_produto);
 
         foreach ($produto->result() as $pro) {
             $data['id_categoria'] = $pro->id_categoria;
@@ -121,26 +121,26 @@ class Site extends CI_Controller {
     }
 
     public function enviaEmail() {
-       $ci = get_instance();
-$ci->load->library('email');
-$config['protocol'] = "smtp";
-$config['smtp_host'] = "ssl://smtp.gmail.com";
-$config['smtp_port'] = "465";
-$config['smtp_user'] = "natanleitte@gmail.com"; 
-$config['smtp_pass'] = "adaware193915008";
-$config['charset'] = "utf-8";
-$config['mailtype'] = "html";
-$config['newline'] = "\r\n";
+        $this->load->helper('url');
+        $this->load->library('email');
 
-$ci->email->initialize($config);
+        $name = $this->input->post("name");
+        $email = $this->input->post("email");
+        $message = $this->input->post("message");
+//        echo $name;
+//        echo $email;
+              
+        // ajusta as informações para envio
+        $this->email->from("contato@aluminiumcenter.com.br", $name);
+        $this->email->to("natanleitte@gmail.com");
 
-$ci->email->from('teste@test.com', 'Blabla');
-$list = array('natanleitte@gmail.com');
-$ci->email->to($list);
-$this->email->reply_to('natanleitte@gmail.com', 'Explendid Videos');
-$ci->email->subject('This is an email test');
-$ci->email->message('It is working. Great!');
-$ci->email->send();
+        $this->email->subject("Aluminium Center - Contato: " );
+        $this->email->message($message . "\n\n");
+
+        // dispara o e-mail
+        $this->email->send();
+        header('Location:' . base_url() . 'index.php/site/contato');
+
     }
 
 }

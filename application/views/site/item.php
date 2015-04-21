@@ -47,7 +47,7 @@
 //                   echo "<li><b>Client:</b> Some Client LTD</li>";
 //                   echo "<li><b>Date:</b> 01, September 2012 - 23, February 2013</li>";
 //                   echo "<li><b>Technologies:</b> HTML5, CSS3, jQuery, PHP, MySQL</li>";
-                   echo "<li class='portfolio-visit-btn'><a href='#' class='btn'>Fazer Orçamento</a></li>";
+                   echo "<li class='portfolio-visit-btn'><a href='" .base_url() . "index.php/site/contato' class='btn'>Fazer Orçamento</a></li>";
                    echo "</ul>";
                    echo "</div>";
                    echo "</div>";

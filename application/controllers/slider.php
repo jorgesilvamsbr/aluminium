@@ -4,13 +4,24 @@ class Slider extends CI_Controller {
 
     public function __construct() {
         parent::__construct();
+        $this->load->model('usuarioModel');
+        $this->usuarioModel->logged();
     }
 
     public function index() {
+
         // Chama model responsavel pela persistencia
         $this->load->model("CategoriaModel");
+        $this->load->model("ProdutoModel");
+        $this->load->model("ItemModel");
+        $this->load->model("SliderModel");
 
-        $data['query'] = $this->CategoriaModel->getCategoria();
+
+        $data['categoria'] = $this->CategoriaModel->getCategoria();
+        $data['produto'] = $this->ProdutoModel->getProduto();
+        $data['item'] = $this->ItemModel->getItem();
+        $data['slider'] = $this->SliderModel->getSlider();
+
 
         // Carrega as views
         $this->load->helper('url');
@@ -21,87 +32,123 @@ class Slider extends CI_Controller {
         $this->load->view('admin/footer');
     }
 
-    public function cadastrarCategoria() {
-        $this->load->helper('url');
-
-        //Chama model responsavel pela persistencia
-        $this->load->model("CategoriaModel");
+    public function cadastrarItem() {
+        $this->load->model('ItemModel');
+        $this->load->model('ProdutoModel');
+        $this->load->model('CategoriaModel');
 
         //Define a zona para captura da data
         date_default_timezone_set('America/Sao_Paulo');
 
-        $data['nome'] = $this->removeAscento($this->input->post("nomeCategoria"));
-        $data['status'] = $this->input->post("statusCategoria");
+        $data['id_produto'] = $this->input->post('idProduto');
+        $data['nome'] = $this->input->post('nomeItem');
+        $data['descricao'] = $this->input->post('descricaoItem');
+        $data['status'] = $this->input->post('statusItem');
         $data['data_criacao'] = date('Y-m-d H:i');
 
-        // Cria a nova pasta com o nome da categoria
-        mkdir("img/portfolio/" . $data['nome'], 0777);
+        $count =    $this->input->post('count');
+//        echo $count;
+//        $this->ItemModel->setItem($data);
 
-        // Persiste
-        $this->CategoriaModel->setCategoria($data);
+            $arquivos = $_FILES["filename0"];
+            $quantidadeDeImagens = count($arquivos["name"]);
+//            echo $filename;
+            $this->inserirImagem($data, $quantidadeDeImagens, $arquivos);
+            
+        header('Location:' . base_url() . 'index.php/slider');
 
-        // Retorna para a página com a mensagem de sucesso
-        header('Location:' . base_url() . 'index.php/categoria?sucess=' . urlencode('Cadastro realizado com sucesso!'));
     }
 
-    public function editarCategoria() {
+    private function inserirImagem($data, $quantidadeDeImagens, $arquivos) {
         $this->load->helper('url');
+        $this->load->model('ItemModel');
+        $this->load->model('ProdutoModel');
+        $this->load->model('CategoriaModel');
 
-        //Chama model responsavel pela persistencia
-        $this->load->model("CategoriaModel");
+        // Caminho de onde a imagem ficará
+//        $idItem = $this->ItemModel->getUltimoItem()->row('id');
+//        $idCategoria = $this->ProdutoModel->getEspecificProduto($data['id_produto'])->row('id_categoria');
+        $pastaItem = "img/homepage-slider/";
+        
+//        if(!file_exists ($pastaItem))
+//        {
+//            mkdir($pastaItem);
+//        }
+//        $pastaItem .= "/";
 
-        // Preenche os campos coma s novas informações
-        $idCategoria = $this->input->post("idCategoria");
-        $data['nome'] = $this->removeAscento($this->input->post("nomeCategoria"));
-        $data['status'] = $this->input->post("statusCategoria");
+        for ($i = 0; $i < $quantidadeDeImagens; $i++) {
 
-        // Renomeia a pasta com o novo nome da categoria
-        $nomeAntigoPasta = $this->CategoriaModel->getEspecificCategoria($idCategoria)->row("nome");
-        if ($nomeAntigoPasta != $data['nome']) {
-            rename("img/portfolio/" . $nomeAntigoPasta, "img/portfolio/" . $data['nome']);
+            // Aplica as configurações do arquivo
+            $_FILES['userfile']['name'] = $arquivos['name'][$i];
+            $_FILES['userfile']['type'] = $arquivos['type'][$i];
+            $_FILES['userfile']['tmp_name'] = $arquivos['tmp_name'][$i];
+            $_FILES['userfile']['error'] = $arquivos['error'][$i];
+            $_FILES['userfile']['size'] = $arquivos['size'][$i];
+
+            //Configurações da imagem
+            $config['upload_path'] = $pastaItem;
+            $config['allowed_types'] = 'gif|jpg|jpeg|png';
+            $config['max_size'] = '30000';
+            $config['max_width'] = '100000';
+            $config['max_height'] = '380000';
+
+
+            $this->load->library('upload', $config);
+
+            // Realiza o upload do arquivo
+            if (!$this->upload->do_upload()) {
+                header('Location:' . base_url() . 'index.php/slider');
+                exit();
+            } else {
+
+                // Realiza o upload do arquivo
+                $this->upload->data();
+
+                $data = array('upload_data' => $this->upload->data());
+                $this->persisteImagemNoBancoDeDados($data, $pastaItem);
+            }
         }
-
-        // Persiste
-        $this->CategoriaModel->updateCategoria($idCategoria, $data);
-
-        // Retorna para a página com a mensagem de sucesso
-        header('Location:' . base_url() . 'index.php/categoria?sucess=' . urlencode('Cadastro realizado com sucesso!'));
+//        header('Location:' . base_url() . 'index.php/item');
     }
 
-    public function excluirCategoria() {
-        //Chama model responsavel pela persistencia
-        $this->load->model("CategoriaModel");
+    private function persisteImagemNoBancoDeDados($data, $pastaItem) {
+        foreach ($data as $item) {
+            // Persiste a imagem na tabela "imagem_item"
+            $nomeDaImagemDoItem = md5(uniqid(time())) . "" . $item['file_ext'];
+            $this->cadastraImagemItem($nomeDaImagemDoItem);
 
-        // Preenche os campos coma s novas informações
-        $idCategoria = $this->input->post("idCategoria");
-
-        // Exclui as pastas
-        $nomeAntigoPasta = $this->CategoriaModel->getEspecificCategoria($idCategoria)->row("nome");
-        $diretorio = "img/portfolio/" . $nomeAntigoPasta;
-        $this->delTree($diretorio);
-
-        // Persiste
-        $this->excluiProdutosPertecentesACategoria($idCategoria);
-        $this->CategoriaModel->deleteCategoria($idCategoria);
-    }
-
-    public function excluiProdutosPertecentesACategoria($idCategoria) {
-        $this->load->model("ProdutoModel");
-        $produtosDaCategoria = $this->ProdutoModel->getProdutoPorCategoria($idCategoria);
-
-        foreach ($produtosDaCategoria->result() as $produtos) {
-            $this->excluiItensPertecentesAoProduto( $produtos->id );
-            $this->ProdutoModel->deleteProduto( $produtos->id );
+            rename($pastaItem . "" . $item['file_name'], $pastaItem . $nomeDaImagemDoItem);
         }
     }
 
-    public function excluiItensPertecentesAoProduto($idProduto) {
+    private function cadastraImagemItem($nomeDaImagemDoItem) {
+        $this->load->model('SliderModel');
+
+        //Define a zona para captura da data
+        date_default_timezone_set('America/Sao_Paulo');
+
+//        $data['id_item'] = $idItem;
+        $data['nome'] = $nomeDaImagemDoItem;
+        echo $nomeDaImagemDoItem;
+        $data['data_insercao'] = date('Y-m-d H:i');
+
+        $this->SliderModel->setSlider($data);
+    }
+
+    public function excluirItem() {
         $this->load->model("ItemModel");
-        $itensDoProduto = $this->ProdutoModel->getItemPorProduto($idProduto);
+        $this->load->model("ProdutoModel");
 
-        foreach ($itensDoProduto->result() as $itens) {
-            $this->ItemModel->deleteItem($itens->id);
-        }
+        $idItem = $this->input->post("idItem");
+        $idDoProdutoDoItem = $this->ItemModel->getEspecificItem($idItem)->row("id_produto");
+        $idDaCategoriaDoItem = $this->ProdutoModel->getEspecificProduto($idDoProdutoDoItem)->row("id_categoria");
+
+        $this->ItemModel->deleteImagensItem($idItem);
+        $this->ItemModel->deleteItem($idItem);
+
+        $diretorio = "img/portfolio/" . $idDaCategoriaDoItem . "/" . $idDoProdutoDoItem . "/" . $idItem;
+
+        $this->delTree($diretorio);
     }
 
     private static function delTree($dir) {
@@ -110,23 +157,6 @@ class Slider extends CI_Controller {
             (is_dir("$dir/$file")) ? Categoria::delTree("$dir/$file") : unlink("$dir/$file");
         }
         return rmdir($dir);
-    }
-
-    private function removeAscento($string) {
-        $map = array(
-            'À' => 'A', 'Á' => 'A', 'Â' => 'A', 'Ã' => 'A', 'Ä' => 'A', 'Å' => 'A',
-            'Æ' => 'A', 'Ç' => 'C', 'È' => 'E', 'É' => 'E', 'Ê' => 'E', 'Ë' => 'E',
-            'Ì' => 'I', 'Í' => 'I', 'Î' => 'I', 'Ï' => 'I', 'Ð' => 'D', 'Ñ' => 'N',
-            'Ò' => 'O', 'Ó' => 'O', 'Ô' => 'O', 'Õ' => 'O', 'Ö' => 'O', 'Ø' => 'O',
-            'Ù' => 'U', 'Ú' => 'U', 'Û' => 'U', 'Ü' => 'U', 'Ý' => 'Y', 'Ŕ' => 'R',
-            'Þ' => 's', 'ß' => 'B', 'à' => 'a', 'á' => 'a', 'â' => 'a', 'ã' => 'a',
-            'ä' => 'a', 'å' => 'a', 'æ' => 'a', 'ç' => 'c', 'è' => 'e', 'é' => 'e',
-            'ê' => 'e', 'ë' => 'e', 'ì' => 'i', 'í' => 'i', 'î' => 'i', 'ï' => 'i',
-            'ð' => 'o', 'ñ' => 'n', 'ò' => 'o', 'ó' => 'o', 'ô' => 'o', 'õ' => 'o',
-            'ö' => 'o', 'ø' => 'o', 'ù' => 'u', 'ú' => 'u', 'û' => 'u', 'ý' => 'y',
-            'þ' => 'b', 'ÿ' => 'y', 'ŕ' => 'r'
-        );
-        return strtr($string, $map); // funciona corretamente
     }
 
 }
