@@ -30,10 +30,10 @@ class SliderModel extends CI_Model {
         $this->db->update("imagem", $data);
     }
 
-    public function deleteImagemItem($idItem) {
+    public function deleteSlider($idSlider) {
         $this->load->database();
-        $this->db->where("id", $idItem);
-        $this->db->delete("imagem");
+        $this->db->where("id", $idSlider);
+        $this->db->delete("slider");
     }
 
     public function getImagemPorItem( $idItem ) {

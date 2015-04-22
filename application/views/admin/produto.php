@@ -23,18 +23,18 @@
                             <div class="form-group">
                                 <input class="form-control" id="url" value="<?php echo base_url() . "index.php/produto/excluirProduto";?>" type="hidden">
                                 <input class="form-control" id="idProduto" name="idProduto" value="-1" type="hidden">
-                                <label>Nome Categoria</label>
-                                <select class="form-control" name="idCategoria" id="idCategoria">
+                                <!--<label>Nome Categoria</label>-->
+<!--                                <select class="form-control" name="idCategoria" id="idCategoria" display="none">
                                     <?php
                                     foreach ($categoria->result() as $row) {
                                         echo "<option value='" . $row->id . "'>" . $row->nome . "</option>";
                                     }
                                     ?>
-                                </select>
+                                </select>-->
                                 <br/>
                                 <label>Nome Produto</label>
                                 <input class="form-control" id="nomeProduto" name="nomeProduto" />
-                                <p class="help-block">Examplo: Mesa, poltrona, etc.</p>
+                                <p class="help-block">Exemplo: Mesa, poltrona, etc.</p>
 
                                 <label>Status</label>
                                 <select class="form-control" name="statusProduto" id="statusProduto">

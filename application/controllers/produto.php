@@ -34,7 +34,8 @@ class Produto extends CI_Controller {
         //Define a zona para captura da data
         date_default_timezone_set('America/Sao_Paulo');
 
-        $data['id_categoria'] = $this->input->post("idCategoria");
+//        $data['id_categoria'] = $this->input->post("idCategoria");
+        $data['id_categoria'] = 1; //Não vai ser utilizado categoria neste projeto.
         $data['nome'] = $this->input->post("nomeProduto");
         $data['status'] = $this->input->post("statusProduto");
         $data['data_criacao'] = date('Y-m-d H:i');

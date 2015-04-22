@@ -31,15 +31,15 @@ $("#filename0").change(function(){
                 <div class="panel-body">
                     <div class="row">
                         <div class="form-group">
-                           
-                                <?php
-                                $attributes = array('id' => 'formItem');
-                                echo form_open_multipart("slider/cadastrarItem", $attributes);
-                                ?>
-                                <input type='hidden' id='count' name='count' value ='0'>
-                                <input class="form-control" id="idItem" value="-1" type="hidden">
-                                <input class="form-control" id="url" value="<?php echo base_url() . "index.php/item/excluirItem"; ?>" type="hidden">
-                               
+
+                            <?php
+                            $attributes = array('id' => 'formItem');
+                            echo form_open_multipart("slider/cadastrarItem", $attributes);
+                            ?>
+                            <input type='hidden' id='count' name='count' value ='0'>
+                            <input class="form-control" id="idItem" value="-1" type="hidden">
+                            <input class="form-control" id="url" value="<?php echo base_url() . "index.php/item/excluirItem"; ?>" type="hidden">
+
                             <div class="col-lg-5 form-group">
                                 <label>Selecione as imagens</label>
                                 <div class='form-inline'>
@@ -51,7 +51,7 @@ $("#filename0").change(function(){
                                     <input type="file" class="form-control" id="filename3" name="filename0[]" multiple>
                                     <p class="help-block">Somente imagens: jpeg, png. Dimensão recomendada: 1920 x 480 pixels</p>
                                     <div id='imagensUpload'>
-                                        
+
                                     </div>
                                 </div>
                                 <input type="button" id="botao" class="btn btn-default" value="Cadastrar" />
@@ -59,7 +59,7 @@ $("#filename0").change(function(){
 
                                 <div id="uploadItemTeste"> </div>
                             </div>
-                            <!--<img id="view-img" src="<?php // echo base_url() . "img/homepage-slider/slide3.png"; ?>">-->
+                            <!--<img id="view-img" src="<?php // echo base_url() . "img/homepage-slider/slide3.png";   ?>">-->
                             <?php echo form_close(); ?>
                         </div>
                         <!-- /.col-lg-6 (nested) -->
@@ -78,23 +78,26 @@ $("#filename0").change(function(){
                                     <!-- /.panel-heading -->
                                     <div class="panel-body">
                                         <div class="table-responsive">
-                                            
+
+                                            <input type="hidden" value="<?php echo base_url(); ?>" id="base_url"/>
                                             <?php
 //                                                $count = 1;
-                                                foreach($slider->result() as $img)
-                                                {
-                                                   echo "<div class='col-lg-6 form-group'>";
-                                                   echo "<strong>Escolher </strong>";
-                                                   echo "<input id='slider" . $img->id . "' type='checkbox'/>";
-                                                   echo "<img style='max-width: 100%;' id='view-img' src='" . base_url() . "img/homepage-slider/" . $img->nome . "'>";
-                                                   echo "</div>";
+                                            foreach ($slider->result() as $img) {
+                                                echo "<div class='col-lg-6 form-group'>";
+                                                echo "<div class='col-lg-3 form-group'><strong>Escolher </strong>";
+                                                echo "<input id='slider" . $img->id . "' type='checkbox'/></div>";
+                                                echo "<div class='col-lg-3 form-group'><button class='btn-danger' onclick='excluirSlider(" . $img->id . ")'>X - Excluir</button></div>";
+                                                echo "<img style='max-width: 100%;' id='view-img' src='" . base_url() . "img/homepage-slider/" . $img->nome . "'>";
+                                                echo "</div>";
 //                                                   if($count >= 3)
 //                                                       break;
 //                                                   $count++;
-                                                }
+                                            }
                                             ?>
-                                            
-                                            
+                                            <div class='col-lg-12 form-group'>
+                                                <hr/>   
+                                                <input type="button" id="botao" class="btn btn-primary" value="Salvar" />
+                                            </div>
 <!--                                            <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                                                 <thead>
                                                     <tr>
@@ -109,20 +112,20 @@ $("#filename0").change(function(){
                                                     </tr>
                                                 </thead>
                                                 <tbody>  
-                                                <?php
-                                                foreach ($item->result() as $item) {
-                                                    echo "<tr class = 'odd gradeX'>" .
-                                                    "<td>" . $item->id_produto . "</td>" .
-                                                    "<td data-id='" . $item->id . "'>" . $item->id . "</td>" .
-                                                    "<td data-nome='" . $item->nome . "'>" . $item->nome . "</td>" .
-                                                    "<td>" . ($item->status == 1 ? 'Ativo' : 'Inativo') . "</td>" .
-                                                    "<td>" . $item->data_criacao . "</td>" .
-                                                    "<td>" . $item->data_modificacao . "</td>" .
-                                                    "<td><button class='btn-info'>Editar</button></td>" .
-                                                    "<td><button class='btn-danger'>Excluir</button></td>" .
-                                                    "</tr>";
-                                                }
-                                                ?>
+                                            <?php
+                                            foreach ($item->result() as $item) {
+                                                echo "<tr class = 'odd gradeX'>" .
+                                                "<td>" . $item->id_produto . "</td>" .
+                                                "<td data-id='" . $item->id . "'>" . $item->id . "</td>" .
+                                                "<td data-nome='" . $item->nome . "'>" . $item->nome . "</td>" .
+                                                "<td>" . ($item->status == 1 ? 'Ativo' : 'Inativo') . "</td>" .
+                                                "<td>" . $item->data_criacao . "</td>" .
+                                                "<td>" . $item->data_modificacao . "</td>" .
+                                                "<td><button class='btn-info'>Editar</button></td>" .
+                                                "<td><button class='btn-danger'>Excluir</button></td>" .
+                                                "</tr>";
+                                            }
+                                            ?>
                                                 </tbody>
                                             </table>-->
                                         </div>
