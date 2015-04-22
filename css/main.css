@@ -2655,13 +2655,6 @@ span.color-red {
 	padding-bottom: 0;
 }
 
-.mainmenu li.logo-wrapper {
-	position: absolute;
-	z-index: 9999;
-	left: 3%;
-	top: 20%;
-}
-
 .mainmenu-wrapper {
 	background-color: #FFF;
 	border-bottom: 4px solid #4f8db3;

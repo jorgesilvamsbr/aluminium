@@ -7,7 +7,8 @@
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
     <head>
-        <meta charset="utf-8">
+        <meta charset="ISO-8859-1">
+        <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <title>.:: ALUMINIUM CENTER ::.</title>
         <meta name="description" content="">
@@ -25,14 +26,17 @@
 
         <script src="<?php echo base_url() . '/js/modernizr-2.6.2-respond-1.1.0.min.js' ?>"></script>
 
-        <style type="text/css">
-	        li#logowrapper {
-				position: absolute;
-				top: 8%;
-				left: 3%;
-				z-index: 9999;
-			}
-        </style>
+         <style type="text/css"> 
+  	        @media screen and (min-width: 924px) {
+ 		        li#logowrapper { 
+ 					position: absolute; 
+ 					top: 8%; 
+ 					left: 1%; 
+ 					z-index: 998; 
+ 				} 
+  			} 
+         </style>
+        
     </head>
     <body>
 
@@ -42,22 +46,22 @@
                 <div class="menuextras">
                     <div class="extras">
                         <ul>
-                            <li><a href="<?php echo base_url() . "index.php/admin" ; ?>"><b>√Årea Administrativa</b></a></li>
+                            <li><a href="<?php echo base_url() . "index.php/admin" ; ?>"><b>¡rea Administrativa</b></a></li>
                         </ul>
                     </div>
                 </div>
                 <nav id="mainmenu" class="mainmenu">
                     <ul>
-                        <li id="logowrapper" class="logo-wrapper"><img src="<?php echo base_url() . '/img/logo2.png' ?>" alt="Multipurpose Twitter Bootstrap Template"></a></li>
+                        <li id="logowrapper" class="logo-wrapper"><img src="<?php echo base_url() . '/img/logo3.png' ?>" alt="Multipurpose Twitter Bootstrap Template"></li>
                         <li class="active">
-                            <a href="<?php echo base_url(); ?>" >In√≠cio</a>
+                            <a href="<?php echo base_url(); ?>" >InÌcio</a>
                         </li>
                         <li>
                             <a href="<?php echo base_url() . "index.php/site/sobre" ; ?>">Sobre</a>
                         </li>
                         <li class="has-submenu">
-                            <a href="#">Cat√°lago + </a>
-                            <div class="mainmenu-submenu">
+                            <a href="#">Cat·lago + </a>
+                            <div id="mainmenusubmenu" class="mainmenu-submenu">
                                 <div class="mainmenu-submenu-inner"> 
 
                                     <?php
@@ -76,8 +80,6 @@
                                                    echo "<li>";
                                                    echo "<a href='#'>";
                                                    echo "<a href='" . base_url() . $get_url . "/?id=" . $produto->id . "'>" . $produto->nome . "</a>";
-//                                                   echo $produto->nome;
-//                                                   echo "</a>";
                                                    echo "</li>";
                                                }
                                            }
@@ -93,17 +95,10 @@
 
                                        if ($counter < 3 && $counter > 0)
                                            echo "</div>";
-
-//                                       a href='" . base_url() . $get_url . "/?pro_codigo=
                                     ?>
                                 </div><!--/mainmenu-submenu-inner -->
                             </div><!--/mainmenu-submenu -->
                         </li>
-<!--                        <li >
-                            <a href = "">Servi√ßos</a>
-                        </li>
-                        <li><a href = "">Equipe</a></li>-->
-                        <!--<li><a href = "features.html">Produtos</a></li>-->
                         <li><a href="<?php echo base_url() . "index.php/site/contato" ; ?>">Contato</a></li>
                     </ul>
                 </nav>
