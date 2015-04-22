@@ -14,14 +14,14 @@ class Site extends CI_Controller {
         $this->load->model('produtoModel');
         $this->load->model('itemModel');
         $this->load->model('imagemItemModel');
-
-
+        $this->load->model('sliderModel');
 
 
         $data['categorias'] = $this->categoriaModel->getCategoria();
         $data['produtos'] = $this->produtoModel->getProduto();
         $data['itens'] = $this->itemModel->getItemDesc();
         $data['imagens'] = $this->imagemItemModel->getImagemItem();
+        $data['sliders'] = $this->sliderModel->getSlider();
 
         $this->load->view('site/header', $data);
         $this->load->view('site/index');

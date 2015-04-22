@@ -112,9 +112,20 @@ class Slider extends CI_Controller {
     }
 
     private function persisteImagemNoBancoDeDados($data, $pastaItem) {
+         $this->load->model('sliderModel');
+         
+         $sliders = $this->sliderModel->getSlider();
+         
+         $count = 1;
+         foreach($sliders->result() as $slider)
+         {
+             $count++;
+         }
+        
         foreach ($data as $item) {
             // Persiste a imagem na tabela "imagem_item"
-            $nomeDaImagemDoItem = md5(uniqid(time())) . "" . $item['file_ext'];
+            $nomeDaImagemDoItem = "slider-bg". $count . ".jpg";
+            $count++;
             $this->cadastraImagemItem($nomeDaImagemDoItem);
 
             rename($pastaItem . "" . $item['file_name'], $pastaItem . $nomeDaImagemDoItem);

@@ -7,33 +7,46 @@ $get_url = "index.php/site/item";
             <div id="sequence">
                 <ul class="sequence-canvas">
                     <!-- Slide 1 -->
-                    <li style="background-image: '../img/homepage-slider/slider-bg1.jpg' !important;">
-                        <!-- Slide Title -->
+                    
+                    <?php
+                    foreach($sliders->result() as $slider)
+                    {
+                        echo "<li class='bg" . $slider->id . "'>";
+                        echo "<!-- Slide Title -->";
+                        echo "<h2 class='title'>Novidade</h2>";
+                        echo "<!-- Slide Text -->";
+                        echo "<h3 class='subtitle'>Você pode colocar um texto descrevendo o o produto aqui!</h3>";
+                        echo "<!-- Slide Image -->";
+                        echo "</li>";
+                    }
+                    ?>
+<!--                    <li class='bg1'>
+                         Slide Title 
                         <h2 class="title">Novidade</h2>
-                        <!-- Slide Text -->
+                         Slide Text 
                         <h3 class="subtitle">Você pode colocar um texto descrevendo o o produto aqui!</h3>
-                        <!-- Slide Image -->
+                         Slide Image 
                         <img class="slide-img" src="<?php echo base_url() . '/img/homepage-slider/slide1.png'?>" alt="Slide 1" />
                     </li>
-                    <!-- End Slide 1 -->
-                    <!-- Slide 2 -->
+                     End Slide 1 
+                     Slide 2 
                     <li class="bg1">
-                        <!-- Slide Title -->
+                         Slide Title 
                         <h2 class="title">Venha conferir!</h2>
-                        <!-- Slide Text -->
+                         Slide Text 
                         <h3 class="subtitle">Cole aqui uma chamada para o seu produto!</h3>
-                        <!-- Slide Image -->
+                         Slide Image 
                         <img class="slide-img" src="<?php echo base_url() . '/img/homepage-slider/slide1.png'?>" alt="Slide 2" />
                     </li>
-                    <!-- End Slide 2 -->
-                    <!-- Slide 3 -->
+                     End Slide 2 
+                     Slide 3 
                     <li class="bg1">
-                        <!-- Slide Title -->
+                         Slide Title 
                         <h2 class="title">Título Título</h2>
-                        <!-- Slide Text -->
+                         Slide Text 
                         <h3 class="subtitle">Use a criatividade! Use a criatividade! Use a criatividade!</h3>
-                        <!-- Slide Video -->
-                    </li>
+                         Slide Video 
+                    </li>-->
                     <!-- End Slide 3 -->
                 </ul>
                 <div class="sequence-pagination-wrapper">
