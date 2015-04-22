@@ -2364,13 +2364,6 @@ span.color-red {
 /*--------------------------------------------------------------------------
 +	Main Menu Style
 --------------------------------------------------------------------------*/
-.mainmenu li.logo-wrapper {
-	position: absolute;
-	z-index: 9999;
-	left: 3%;
-	top: 20%;
-}
-
 .mainmenu li.logo-wrapper a {
   border-right: 1px solid #E8E8E8;
   padding-left: 0;
@@ -2379,8 +2372,8 @@ span.color-red {
 }
 
 .mainmenu-wrapper {
-  background-color: #FFF;
-  border-bottom: 4px solid #e74c3c;
+  background-color: #e91313;
+  border-bottom: 4px solid #ffffff;
   z-index: 4;
 }
 .mainmenu {
@@ -2408,18 +2401,18 @@ span.color-red {
 .mainmenu .mainmenu-submenu-inner > li > a {
   font-size: 1.2em;
   padding: 1.2em 1.5em;
-  color: #999;
+  color: #eee;
   display: inline-block;
   text-decoration: none;
 }
 .mainmenu > ul > li > a:hover,
 .mainmenu .mainmenu-submenu-inner > li > a:hover {
-  color: #e74c3c;
+  color: #fff;
   text-decoration: none;
 }
 .mainmenu > ul > li.active > a,
 .mainmenu .mainmenu-submenu-inner > li.active > a {
-  color: #e74c3c;
+  color: #404040;
   font-weight: 600 !important;
 }
 .mainmenu > ul > li.mainmenu-open a,
@@ -2427,12 +2420,12 @@ span.color-red {
 .mainmenu > ul li.mainmenu-open > a:hover,
 .mainmenu .mainmenu-submenu-inner li.mainmenu-open > a:hover {
   color: #fff;
-  background: #e74c3c;
+  background: #ef8a7e;
 }
 .mainmenu .mainmenu-submenu {
   display: none;
   position: absolute;
-  background: #e74c3c;
+  background: #ef8a7e;
   width: 100%;
   left: 0;
   z-index: 999;
@@ -2675,11 +2668,4 @@ span.color-red {
 }
 .dropdown.open a.dropdown-toggle .caret {
   border-top: 4px solid #FFF;
-}
-
-.logowrapper{
-	position:relative;
-	top: 0;
-	left: 0;
-	background: #DA1111;
 }
